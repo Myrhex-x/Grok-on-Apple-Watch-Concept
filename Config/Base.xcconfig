@@ -1,0 +1,6 @@
+// Shared build settings for every configuration.
+//
+// Signing: the Apple Developer Team ID is kept out of the project, in Config/Local.xcconfig
+// (DEVELOPMENT_TEAM = <team id>). That file is not part of the project.
+
+#include? "Local.xcconfig"
