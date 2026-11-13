@@ -37,9 +37,9 @@ nonisolated enum Notifier {
     }
 
     static func clearDeliveredAnswers() {
-        let center = UNUserNotificationCenter.current()
-        center.getDeliveredNotifications { notifications in
-            let ids = notifications.map(\.request.identifier).filter { $0.hasPrefix(answerPrefix) }
+        Task {
+            let center = UNUserNotificationCenter.current()
+            let ids = await center.deliveredNotifications().map(\.request.identifier).filter { $0.hasPrefix(answerPrefix) }
             if !ids.isEmpty { center.removeDeliveredNotifications(withIdentifiers: ids) }
         }
     }
