@@ -381,7 +381,7 @@ nonisolated struct GrokClient: Sendable {
     /// The model a "model not found" message names, when it says it plainly.
     static func modelName(in detail: String) -> String? {
         guard let range = detail.range(of: #"grok-[A-Za-z0-9.\-]+"#, options: .regularExpression) else { return nil }
-        return String(detail[range])
+        return String(detail[range]).trimmingCharacters(in: CharacterSet(charactersIn: ".-"))
     }
 
     static func message(from error: Any) -> String {
