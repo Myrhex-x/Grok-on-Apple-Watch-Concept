@@ -1,0 +1,40 @@
+//
+//  DebugHooks.swift
+//  GrokWatch
+//
+//  Debug builds only: launch arguments for the simulator, so every screen can be reached and
+//  checked without a voice, a keyboard or the real key.
+//
+//    -GrokWatchSimulated YES       a pretend Grok (nothing sent, nothing billed)
+//    -GrokWatchKey <key>           use this key for the run, without saving it
+//    -GrokWatchAsk "<question>"    ask this at launch
+//    -GrokWatchDemo YES            start with a short conversation on screen
+//    -GrokWatchFakeExpiryDays 5    pretend the install ends in 5 days
+//    -GrokWatchPage settings|key   open that page at launch
+//    -GrokWatchNoAutoDictation YES never open dictation by itself
+//
+
+#if DEBUG
+import Foundation
+
+nonisolated enum DebugHooks {
+    private static var defaults: UserDefaults { .standard }
+
+    static var keyOverride: String? {
+        if defaults.bool(forKey: "GrokWatchSimulated") { return GrokClient.simulatedKey }
+        return defaults.string(forKey: "GrokWatchKey")
+    }
+
+    static var ask: String? { defaults.string(forKey: "GrokWatchAsk") }
+    static var demo: Bool { defaults.bool(forKey: "GrokWatchDemo") }
+    static var page: String? { defaults.string(forKey: "GrokWatchPage") }
+
+    static var fakeExpiryDays: Double? {
+        defaults.object(forKey: "GrokWatchFakeExpiryDays") == nil ? nil : defaults.double(forKey: "GrokWatchFakeExpiryDays")
+    }
+
+    static var noAutoDictation: Bool {
+        defaults.bool(forKey: "GrokWatchNoAutoDictation") || ask != nil || demo || page != nil
+    }
+}
+#endif
