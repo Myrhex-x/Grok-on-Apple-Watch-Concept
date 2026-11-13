@@ -81,15 +81,17 @@ struct KeySetupView: View {
             }
             preferences.adopt(models)
             await finish("Key checked and saved.")
-        } catch GrokError.offline, GrokError.connectionLost, GrokError.timedOut {
-            // No way to check it now: keep it, the first question will tell.
+        } catch GrokError.invalidKey {
+            step = .failed(GrokError.invalidKey.localizedDescription)
+        } catch {
+            // Offline, or a key allowed to answer but not to list models: keep it, the first
+            // question will tell. Only a key SpaceXAI rejects outright is refused.
             guard GrokKeyStore.save(key) else {
                 step = .failed("The watch couldn’t save the key.")
                 return
             }
-            await finish("Key saved. No connection to check it.")
-        } catch {
-            step = .failed((error as? LocalizedError)?.errorDescription ?? error.localizedDescription)
+            let reason = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            await finish("Key saved without checking it: \(reason)")
         }
     }
 
