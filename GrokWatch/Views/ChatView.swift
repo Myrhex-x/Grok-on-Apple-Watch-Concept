@@ -126,7 +126,8 @@ private struct ConversationView: View {
                             .id(message.id)
                     }
                 }
-                .padding(.bottom, 6)
+                // Room to scroll the last line clear of the buttons at the bottom.
+                .padding(.bottom, 52)
             }
             .onAppear {
                 // Back on screen: show the last question with the start of its answer.
