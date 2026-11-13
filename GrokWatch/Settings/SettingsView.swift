@@ -11,6 +11,7 @@ struct SettingsView: View {
 
     var body: some View {
         @Bindable var preferences = preferences
+        ScrollViewReader { proxy in
         List {
             Section {
                 Picker("Model", selection: $preferences.model) {
@@ -67,6 +68,13 @@ struct SettingsView: View {
                     Text("To extend it, connect the iPhone to the Mac and install again. A reminder comes a week before.")
                 }
             }
+            .id("installation")
+        }
+        #if DEBUG
+        .onAppear {
+            if DebugHooks.page == "settings-bottom" { proxy.scrollTo("installation", anchor: .bottom) }
+        }
+        #endif
         }
         .navigationTitle("Settings")
         .task { await chat.refreshModels() }

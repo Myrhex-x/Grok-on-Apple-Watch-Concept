@@ -60,7 +60,7 @@ struct ChatView: View {
         #if DEBUG
         .onAppear {
             switch DebugHooks.page {
-            case "settings": path = [.settings]
+            case "settings", "settings-bottom": path = [.settings]
             case "key": path = [.settings, .key]
             default: break
             }
