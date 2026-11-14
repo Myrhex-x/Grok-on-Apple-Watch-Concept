@@ -23,7 +23,10 @@ nonisolated enum Prompt {
             "Questions are often dictated: if a word looks wrongly transcribed, go with the most likely meaning without mentioning it.",
         ]
         if canSearch {
-            lines.append("For news, weather, sports results, prices or anything that changes quickly, search before answering, then answer in one or two sentences.")
+            lines.append("Your knowledge comes from your training and is behind today’s date: the world has changed since. Whenever the answer depends on the present (who leads a country, a city, a company or a team, elections, news, sports, weather, prices and markets, releases, records, anything “current”, “latest” or “right now”), search the web before answering, even if you think you know the answer, and rely on what you find.")
+            lines.append("For a calculation, a definition or a fact that doesn’t change, answer directly without searching.")
+        } else {
+            lines.append("You have no web search: if the answer depends on current events, say that your answer may be out of date.")
         }
         return lines.joined(separator: "\n")
     }

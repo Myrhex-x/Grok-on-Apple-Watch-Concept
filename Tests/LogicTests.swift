@@ -272,8 +272,10 @@ struct LogicTests {
         check(text.contains("Friday, November 13, 2026"), "English date")
         check(text.contains("2:05"), "local time")
         check(text.contains("Reply in English"), "English first")
-        check(text.contains("search before answering"), "search line with tools")
-        check(!Prompt.instructions(now: now, timeZone: zone, canSearch: false).contains("search before"), "no search line without tools")
+        check(text.contains("search the web before answering"), "search line with tools")
+        check(text.contains("who leads a country"), "who holds an office counts as current")
+        let offline = Prompt.instructions(now: now, timeZone: zone, canSearch: false)
+        check(!offline.contains("search the web") && offline.contains("may be out of date"), "no search line without tools, a warning instead")
         check(!text.contains("\u{2014}") && !text.contains("\u{2013}"), "no long dashes")
     }
 }
