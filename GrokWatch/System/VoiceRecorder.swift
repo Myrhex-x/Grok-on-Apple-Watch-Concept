@@ -37,19 +37,84 @@ final class VoiceRecorder {
     private static let waitForSpeech: Duration = .seconds(7)
     private static let longest: Duration = .seconds(45)
 
+    @ObservationIgnored private var isStarting = false
+
     func start(_ finish: @escaping (Outcome) -> Void) async {
-        guard !isRecording else { return }
+        guard !isRecording, !isStarting else { return }
         guard await AVAudioApplication.requestRecordPermission() else {
             finish(.failed("Grok can’t use the microphone. Allow it in Settings > Privacy & Security > Microphone."))
             return
         }
+        isStarting = true
+        let opened = await Self.open(timeout: .seconds(4))
+        isStarting = false
+        switch opened {
+        case .success(let box):
+            recorder = box.recorder
+            self.finish = finish
+            isRecording = true
+            meter = Task { await self.followLevels() }
+        case .failure(let failure):
+            finish(.failed(failure.message))
+        }
+    }
+
+    // MARK: - Opening the microphone, away from the screen
+
+    private final class RecorderBox: @unchecked Sendable {
+        let recorder: AVAudioRecorder
+        init(_ recorder: AVAudioRecorder) { self.recorder = recorder }
+    }
+
+    private struct OpenFailure: Error {
+        let message: String
+    }
+
+    /// Lets exactly one of two racers finish the wait.
+    private final class Once: @unchecked Sendable {
+        private let lock = NSLock()
+        private var done = false
+        func claim() -> Bool {
+            lock.lock()
+            defer { lock.unlock() }
+            if done { return false }
+            done = true
+            return true
+        }
+    }
+
+    /// Activating the audio session and starting the recorder can block; it runs on a background
+    /// thread, and a microphone that doesn't answer within `timeout` is reported instead of
+    /// freezing the screen.
+    private static func open(timeout: Duration) async -> Result<RecorderBox, OpenFailure> {
+        await withCheckedContinuation { continuation in
+            let once = Once()
+            Task.detached(priority: .userInitiated) {
+                let result = Self.openNow()
+                if once.claim() {
+                    continuation.resume(returning: result)
+                } else if case .success(let late) = result {
+                    late.recorder.stop()
+                    late.recorder.deleteRecording()
+                    try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+                }
+            }
+            Task.detached {
+                try? await Task.sleep(for: timeout)
+                if once.claim() {
+                    continuation.resume(returning: .failure(OpenFailure(message: "The microphone isn’t responding. Try again in a moment.")))
+                }
+            }
+        }
+    }
+
+    private nonisolated static func openNow() -> Result<RecorderBox, OpenFailure> {
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setCategory(.record, mode: .default)
             try session.setActive(true)
         } catch {
-            finish(.failed("The microphone isn’t available right now."))
-            return
+            return .failure(OpenFailure(message: "The microphone isn’t available right now."))
         }
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("question-\(UUID().uuidString)")
@@ -61,20 +126,15 @@ final class VoiceRecorder {
             AVEncoderBitRateKey: 32_000,
         ]
         guard let recorder = try? AVAudioRecorder(url: url, settings: settings) else {
-            deactivate()
-            finish(.failed("The microphone couldn’t start."))
-            return
+            try? session.setActive(false, options: .notifyOthersOnDeactivation)
+            return .failure(OpenFailure(message: "The microphone couldn’t start."))
         }
         recorder.isMeteringEnabled = true
         guard recorder.record() else {
-            deactivate()
-            finish(.failed("The microphone couldn’t start."))
-            return
+            try? session.setActive(false, options: .notifyOthersOnDeactivation)
+            return .failure(OpenFailure(message: "The microphone couldn’t start."))
         }
-        self.recorder = recorder
-        self.finish = finish
-        isRecording = true
-        meter = Task { await self.followLevels() }
+        return .success(RecorderBox(recorder))
     }
 
     /// Stops and hands the recording over (the user tapped Send, or the speaking stopped).
