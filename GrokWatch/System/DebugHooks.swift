@@ -8,6 +8,7 @@
 //    -GrokWatchSimulated YES       a pretend Grok (nothing sent, nothing billed)
 //    -GrokWatchKey <key>           use this key for the run, without saving it
 //    -GrokWatchAsk "<question>"    ask this at launch
+//    -GrokWatchFresh YES           start on a new conversation
 //    -GrokWatchDemo YES            start with a short conversation on screen
 //    -GrokWatchFakeExpiryDays 5    pretend the install ends in 5 days
 //    -GrokWatchPage settings|key   open that page at launch
@@ -27,6 +28,8 @@ nonisolated enum DebugHooks {
     }
 
     static var ask: String? { defaults.string(forKey: "GrokWatchAsk") }
+    /// Start on a new conversation (the current one becomes the previous one).
+    static var fresh: Bool { defaults.bool(forKey: "GrokWatchFresh") }
     static var demo: Bool { defaults.bool(forKey: "GrokWatchDemo") }
     static var page: String? { defaults.string(forKey: "GrokWatchPage") }
 

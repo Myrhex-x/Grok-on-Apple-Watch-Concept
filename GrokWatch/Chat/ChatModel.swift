@@ -397,6 +397,7 @@ final class ChatModel {
 
     #if DEBUG
     private func applyDebugHooks() {
+        if DebugHooks.fresh { archiveAndStartFresh() }
         if DebugHooks.demo {
             conversation = Conversation(messages: [
                 ChatMessage(role: .user, text: "Hey, what’s 2 + 2?"),
