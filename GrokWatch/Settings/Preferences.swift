@@ -23,6 +23,26 @@ nonisolated enum Reasoning: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// The language the questions are spoken in, for SpaceXAI's transcription.
+nonisolated enum SpeechLanguage: String, CaseIterable, Identifiable, Sendable {
+    case french = "fr"
+    case english = "en"
+    case automatic = "auto"
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .french: "French"
+        case .english: "English"
+        case .automatic: "Automatic"
+        }
+    }
+
+    /// What the transcription takes (nil: SpaceXAI detects the language).
+    var code: String? { self == .automatic ? nil : rawValue }
+}
+
 @Observable
 final class Preferences {
     private enum Keys {
@@ -31,6 +51,7 @@ final class Preferences {
         static let webSearch = "webSearch"
         static let xSearch = "xSearch"
         static let dictateOnOpen = "dictateOnOpen"
+        static let speechLanguage = "speechLanguage"
         static let models = "models"
     }
 
@@ -50,9 +71,12 @@ final class Preferences {
     var xSearch: Bool {
         didSet { defaults.set(xSearch, forKey: Keys.xSearch) }
     }
-    /// Opening the app starts dictation for a new question.
+    /// Opening the app for a new question starts the microphone.
     var dictateOnOpen: Bool {
         didSet { defaults.set(dictateOnOpen, forKey: Keys.dictateOnOpen) }
+    }
+    var speechLanguage: SpeechLanguage {
+        didSet { defaults.set(speechLanguage.rawValue, forKey: Keys.speechLanguage) }
     }
     /// The models the key can use, as SpaceXAI listed them last.
     var models: [GrokModelInfo] {
@@ -66,6 +90,7 @@ final class Preferences {
         webSearch = defaults.object(forKey: Keys.webSearch) as? Bool ?? true
         xSearch = defaults.object(forKey: Keys.xSearch) as? Bool ?? false
         dictateOnOpen = defaults.object(forKey: Keys.dictateOnOpen) as? Bool ?? true
+        speechLanguage = defaults.string(forKey: Keys.speechLanguage).flatMap(SpeechLanguage.init(rawValue:)) ?? .english
         models = defaults.data(forKey: Keys.models).flatMap { try? JSONDecoder().decode([GrokModelInfo].self, from: $0) } ?? []
     }
 

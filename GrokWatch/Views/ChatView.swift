@@ -31,13 +31,15 @@ struct ChatView: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink(value: Page.settings) {
-                            Image(systemName: "gearshape.fill")
+                    if chat.voice == .off {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink(value: Page.settings) {
+                                Image(systemName: "gearshape.fill")
+                            }
+                            .accessibilityLabel("Settings")
                         }
-                        .accessibilityLabel("Settings")
                     }
-                    if chat.hasKey && !chat.messages.isEmpty {
+                    if chat.hasKey && !chat.messages.isEmpty && chat.voice == .off {
                         ToolbarItemGroup(placement: .bottomBar) {
                             KeyboardButton()
                             MicButton()
@@ -69,7 +71,9 @@ struct ChatView: View {
     }
 
     @ViewBuilder private var content: some View {
-        if !chat.hasKey {
+        if chat.voice != .off {
+            ListeningView()
+        } else if !chat.hasKey {
             KeyPromptView()
         } else if chat.messages.isEmpty {
             EmptyStateView()
@@ -85,28 +89,30 @@ struct ChatView: View {
             if comingBack {
                 comingBack = false
                 chat.reopened()
-                dictateIfWanted()
+                listenIfWanted()
             }
         case .background:
             comingBack = true
             chat.wentToBackground()
+            // The app left the screen mid-question: send what was said.
+            if chat.voice == .listening { chat.stopListening() }
         default:
             break
         }
     }
 
     /// Opening the app for a new question starts listening right away.
-    private func dictateIfWanted() {
+    private func listenIfWanted() {
         // Not the moment the key arrives from the Mac: the notification question comes first.
         guard preferences.dictateOnOpen, chat.hasKey, chat.keyImportNotice == nil,
-              chat.messages.isEmpty, !chat.isBusy, path.isEmpty else { return }
+              chat.messages.isEmpty, !chat.isBusy, chat.voice == .off, path.isEmpty else { return }
         #if DEBUG
         if DebugHooks.noAutoDictation { return }
         #endif
         Task {
-            try? await Task.sleep(for: .milliseconds(450))
+            try? await Task.sleep(for: .milliseconds(350))
             guard chat.messages.isEmpty, path.isEmpty, scenePhase == .active else { return }
-            Dictation.start(chat.ask)
+            chat.listen()
         }
     }
 }
@@ -127,6 +133,11 @@ private struct ConversationView: View {
                                    activity: message.state == .streaming ? chat.activity : nil,
                                    onRetry: { chat.retry(message) })
                             .id(message.id)
+                    }
+                    if let notice = chat.voiceNotice {
+                        Label(notice, systemImage: "mic.slash")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 // Room to scroll the last line clear of the buttons at the bottom.

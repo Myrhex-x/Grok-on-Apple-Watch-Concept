@@ -25,6 +25,12 @@ struct EmptyStateView: View {
                         .buttonStyle(WhiteDiscButtonStyle(diameter: 72))
                     Text("Speak")
                         .font(.headline)
+                    if let notice = chat.voiceNotice {
+                        Text(notice)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
                     KeyboardButton(title: "Type")
                         .buttonStyle(.bordered)
                         .buttonBorderShape(.capsule)

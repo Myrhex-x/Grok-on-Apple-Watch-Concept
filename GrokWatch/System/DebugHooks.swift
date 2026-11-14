@@ -11,7 +11,8 @@
 //    -GrokWatchDemo YES            start with a short conversation on screen
 //    -GrokWatchFakeExpiryDays 5    pretend the install ends in 5 days
 //    -GrokWatchPage settings|key   open that page at launch
-//    -GrokWatchNoAutoDictation YES never open dictation by itself
+//    -GrokWatchNoAutoDictation YES never open the microphone by itself
+//    -GrokWatchListenFor 2         listen at launch, send after 2 s
 //
 
 #if DEBUG
@@ -33,8 +34,13 @@ nonisolated enum DebugHooks {
         defaults.object(forKey: "GrokWatchFakeExpiryDays") == nil ? nil : defaults.double(forKey: "GrokWatchFakeExpiryDays")
     }
 
+    /// Start listening at launch and send after this many seconds (the simulator can't be spoken to).
+    static var listenFor: Double? {
+        defaults.object(forKey: "GrokWatchListenFor") == nil ? nil : defaults.double(forKey: "GrokWatchListenFor")
+    }
+
     static var noAutoDictation: Bool {
-        defaults.bool(forKey: "GrokWatchNoAutoDictation") || ask != nil || demo || page != nil
+        defaults.bool(forKey: "GrokWatchNoAutoDictation") || ask != nil || demo || page != nil || listenFor != nil
     }
 }
 #endif

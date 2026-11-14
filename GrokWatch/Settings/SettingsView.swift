@@ -41,10 +41,17 @@ struct SettingsView: View {
             .tint(.green)
 
             Section {
-                Toggle("Dictate on open", isOn: $preferences.dictateOnOpen)
+                Picker("Spoken language", selection: $preferences.speechLanguage) {
+                    ForEach(SpeechLanguage.allCases) { language in
+                        Text(language.title).tag(language)
+                    }
+                }
+                Toggle("Listen on open", isOn: $preferences.dictateOnOpen)
                     .tint(.green)
+            } header: {
+                Text("Microphone")
             } footer: {
-                Text("When you open the app for a new question, dictation starts right away.")
+                Text("The microphone stops when you stop talking. SpaceXAI turns the audio into text, for about $0.10 per hour of audio.")
             }
 
             Section("SpaceXAI account") {

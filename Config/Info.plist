@@ -26,6 +26,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Grok records your question to turn it into text. The recording goes to SpaceXAI, then it’s deleted from the watch.</string>
 	<key>WKApplication</key>
 	<true/>
 	<key>WKWatchOnly</key>

@@ -33,7 +33,15 @@ final class ChatModel {
     /// Set when the key just arrived from the Mac, until the first question.
     private(set) var keyImportNotice: String?
 
+    /// The microphone: recording the question, then SpaceXAI turning it into text.
+    enum Voice: Equatable { case off, listening, transcribing }
+    private(set) var voice = Voice.off
+    /// A line about the last try with the microphone (nothing heard, no access, an error).
+    private(set) var voiceNotice: String?
+    let recorder = VoiceRecorder()
+
     @ObservationIgnored private var task: Task<Void, Never>?
+    @ObservationIgnored private var transcription: Task<Void, Never>?
 
     init(preferences: Preferences) {
         self.preferences = preferences
@@ -112,6 +120,7 @@ final class ChatModel {
         guard !text.isEmpty, !isBusy else { return }
         if isStale { archiveAndStartFresh() }
         keyImportNotice = nil
+        voiceNotice = nil
         let question = ChatMessage(role: .user, text: text)
         conversation.messages.append(question)
         conversation.updatedAt = Date()
@@ -159,6 +168,82 @@ final class ChatModel {
     private func save() {
         ConversationStore.save(conversation, as: .current)
         ConversationStore.save(previous, as: .previous)
+    }
+
+    // MARK: - Voice
+
+    /// One tap: the watch taps the wrist and starts recording; it stops by itself when the speaking
+    /// stops, the words come back from SpaceXAI, and they are asked as the question.
+    func listen() {
+        guard hasKey, !isBusy, voice == .off else { return }
+        voiceNotice = nil
+        voice = .listening
+        WKInterfaceDevice.current().play(.start)
+        Task {
+            await recorder.start { [weak self] outcome in
+                self?.voiceFinished(outcome)
+            }
+        }
+    }
+
+    /// Sends what has been said so far.
+    func stopListening() {
+        recorder.stop()
+    }
+
+    func cancelListening() {
+        if voice == .listening {
+            recorder.cancel()
+        } else {
+            transcription?.cancel()
+            transcription = nil
+            voice = .off
+        }
+    }
+
+    private func voiceFinished(_ outcome: VoiceRecorder.Outcome) {
+        switch outcome {
+        case .recorded(let url):
+            WKInterfaceDevice.current().play(.click)
+            voice = .transcribing
+            transcription = Task { await transcribe(url) }
+        case .nothingHeard:
+            voice = .off
+            voiceNotice = "I didn’t hear anything. Tap the microphone and speak."
+        case .cancelled:
+            voice = .off
+        case .failed(let message):
+            voice = .off
+            voiceNotice = message
+        }
+    }
+
+    private func transcribe(_ url: URL) async {
+        defer { try? FileManager.default.removeItem(at: url) }
+        guard let key = GrokKeyStore.read(), let audio = try? Data(contentsOf: url) else {
+            voice = .off
+            return
+        }
+        let background = BackgroundActivity.begin(reason: "Grok is listening")
+        defer { background.end() }
+        do {
+            let transcript = try await SpeechClient(apiKey: key)
+                .transcribe(audio: audio, fileName: "question.m4a", language: preferences.speechLanguage.code)
+            guard !Task.isCancelled else { return }
+            if let seconds = transcript.duration { Spending.add(seconds / 3_600 * SpeechClient.usdPerHour) }
+            voice = .off
+            transcription = nil
+            if transcript.text.isEmpty {
+                voiceNotice = "I didn’t hear anything. Tap the microphone and speak."
+            } else {
+                ask(transcript.text)
+            }
+        } catch {
+            guard !Task.isCancelled else { return }
+            voice = .off
+            transcription = nil
+            voiceNotice = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        }
     }
 
     // MARK: - One answer
@@ -325,6 +410,14 @@ final class ChatModel {
             Task {
                 try? await Task.sleep(for: .milliseconds(800))
                 ask(question)
+            }
+        }
+        if let seconds = DebugHooks.listenFor {
+            Task {
+                try? await Task.sleep(for: .milliseconds(800))
+                listen()
+                try? await Task.sleep(for: .seconds(seconds))
+                stopListening()
             }
         }
     }

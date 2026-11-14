@@ -18,6 +18,7 @@ xcrun swiftc -swift-version 5 -default-isolation MainActor -parse-as-library \
   GrokWatch/Grok/GrokClient.swift \
   GrokWatch/Grok/ModelChoice.swift \
   GrokWatch/Grok/Prompt.swift \
+  GrokWatch/Grok/SpeechClient.swift \
   GrokWatch/Chat/ChatMessage.swift \
   GrokWatch/Chat/AnswerText.swift \
   GrokWatch/System/ProvisioningProfile.swift \

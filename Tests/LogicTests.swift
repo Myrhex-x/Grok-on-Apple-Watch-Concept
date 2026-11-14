@@ -33,6 +33,7 @@ struct LogicTests {
         reminders()
         spending()
         prompt()
+        speech()
         print("\(count - failures)/\(count) checks passed")
         exit(failures == 0 ? 0 : 1)
     }
@@ -243,6 +244,25 @@ struct LogicTests {
         check(Spending.formatted(0.504) == "$0.50", "format")
         check(Spending.formatted(0.004) == "<\u{00A0}$0.01", "tiny amounts")
         check(Spending.formatted(0) == "$0", "zero")
+    }
+
+    static func speech() {
+        let body = String(decoding: SpeechClient.body(boundary: "B", audio: Data("AUDIO".utf8), fileName: "q.m4a", language: "fr"), as: UTF8.self)
+        check(body.hasPrefix("--B\r\nContent-Disposition: form-data; name=\"language\"\r\n\r\nfr\r\n"), "language comes first")
+        check(body.contains("name=\"format\"\r\n\r\ntrue\r\n"), "digits for spoken numbers when the language is set")
+        check(body.components(separatedBy: "name=\"keyterm\"").count == 3, "two key terms, one field each")
+        if let file = body.range(of: "name=\"file\"; filename=\"q.m4a\""), let term = body.range(of: "name=\"keyterm\"", options: .backwards) {
+            check(term.lowerBound < file.lowerBound, "the file comes after every option")
+        } else {
+            check(false, "file and key term fields present")
+        }
+        check(body.contains("Content-Type: audio/mp4\r\n\r\nAUDIO\r\n--B--\r\n"), "audio then the closing boundary")
+        let automatic = String(decoding: SpeechClient.body(boundary: "B", audio: Data(), fileName: "q.m4a", language: nil), as: UTF8.self)
+        check(!automatic.contains("name=\"language\"") && !automatic.contains("name=\"format\""), "no language: no format either")
+        let transcript = try? SpeechClient.transcript(from: Data(#"{"text":" What’s 2 + 2? ","language":"fr","duration":2.4,"words":[]}"#.utf8))
+        check(transcript == SpeechClient.Transcript(text: "What’s 2 + 2?", duration: 2.4), "transcript read and trimmed")
+        check((try? SpeechClient.transcript(from: Data(#"{"text":"","duration":1}"#.utf8)))?.text == "", "silence is an empty transcript")
+        check((try? SpeechClient.transcript(from: Data("{}".utf8))) == nil, "no text is an error")
     }
 
     static func prompt() {

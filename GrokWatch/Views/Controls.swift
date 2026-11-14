@@ -2,13 +2,13 @@
 //  Controls.swift
 //  GrokWatch
 //
-//  The two ways to ask: speak (one tap straight into dictation) or type (the watch keyboard,
+//  The two ways to ask: speak (one tap and the watch is recording) or type (the watch keyboard,
 //  Scribble, or the iPhone's keyboard).
 //
 
 import SwiftUI
 
-/// Speak a question, or stop the answer being written.
+/// Speak a question (recording starts on the tap), or stop the answer being written.
 struct MicButton: View {
     @Environment(ChatModel.self) private var chat
 
@@ -18,22 +18,12 @@ struct MicButton: View {
                 Image(systemName: "stop.fill")
             }
             .accessibilityLabel("Stop the answer")
-        } else if Dictation.isAvailable {
-            Button {
-                Dictation.start(chat.ask)
-            } label: {
-                Image(systemName: "mic.fill")
-            }
-            .disabled(!chat.hasKey)
-            .accessibilityLabel("Dictate a question")
         } else {
-            TextFieldLink(prompt: Text("Your question")) {
+            Button(action: chat.listen) {
                 Image(systemName: "mic.fill")
-            } onSubmit: { text in
-                chat.ask(text)
             }
             .disabled(!chat.hasKey)
-            .accessibilityLabel("Dictate a question")
+            .accessibilityLabel("Ask a question out loud")
         }
     }
 }
