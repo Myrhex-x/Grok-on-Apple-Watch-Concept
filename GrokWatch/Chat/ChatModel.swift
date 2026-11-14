@@ -96,7 +96,7 @@ final class ChatModel {
     /// The key came from install-key.sh: say so, then ask for notifications (answers that land
     /// with the wrist down, the reminder before the install ends) and fetch the model list.
     private func keyArrivedFromMac() {
-        keyImportNotice = "SpaceXAI key received from the Mac. Grok is ready."
+        keyImportNotice = String(localized: "SpaceXAI key received from the Mac. Grok is ready.")
         Task {
             await Notifier.requestAuthorizationIfNeeded()
             await InstallExpiry.refreshReminders()
@@ -219,7 +219,7 @@ final class ChatModel {
             transcription = Task { await transcribe(url) }
         case .nothingHeard:
             voice = .off
-            voiceNotice = "I didn’t hear anything. Tap the microphone and speak."
+            voiceNotice = String(localized: "I didn’t hear anything. Tap the microphone and speak.")
         case .cancelled:
             voice = .off
         case .failed(let message):
@@ -244,7 +244,7 @@ final class ChatModel {
             voice = .off
             transcription = nil
             if transcript.text.isEmpty {
-                voiceNotice = "I didn’t hear anything. Tap the microphone and speak."
+                voiceNotice = String(localized: "I didn’t hear anything. Tap the microphone and speak.")
             } else {
                 ask(transcript.text)
             }
@@ -325,7 +325,7 @@ final class ChatModel {
                     update(answerID) {
                         $0.text = final
                         $0.state = final.isEmpty ? .failed : .complete
-                        $0.errorText = final.isEmpty ? "Grok didn’t answer. Try again." : nil
+                        $0.errorText = final.isEmpty ? String(localized: "Grok didn’t answer. Try again.") : nil
                         $0.sources = Array(hosts.prefix(3))
                         $0.costUSD = result.usage?.costUSD
                     }

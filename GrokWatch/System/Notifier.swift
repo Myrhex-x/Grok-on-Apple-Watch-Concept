@@ -25,7 +25,7 @@ nonisolated enum Notifier {
             content.subtitle = question.count > 60 ? String(question.prefix(58)) + "…" : question
         }
         if answer.state == .failed {
-            content.body = answer.errorText ?? "The answer didn’t come through."
+            content.body = answer.errorText ?? String(localized: "The answer didn’t come through.")
         } else {
             let text = AnswerText.plain(answer.text)
             content.body = text.count > 1_500 ? String(text.prefix(1_498)) + "…" : text

@@ -49,7 +49,7 @@ struct MessageRow: View {
                     .foregroundStyle(.secondary)
             }
             if !message.sources.isEmpty {
-                Text("Sources: " + message.sources.joined(separator: ", "))
+                Text("Sources: \(message.sources.joined(separator: ", "))")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -60,7 +60,7 @@ struct MessageRow: View {
             }
             if message.state == .failed {
                 Label {
-                    Text(message.errorText ?? "The answer didn’t come through.")
+                    Text(message.errorText ?? String(localized: "The answer didn’t come through."))
                 } icon: {
                     Image(systemName: "exclamationmark.triangle.fill")
                 }
@@ -95,7 +95,7 @@ struct TypingIndicator: View {
         }
         .padding(.vertical, 4)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(label ?? "Grok is writing")
+        .accessibilityLabel(label ?? String(localized: "Grok is writing"))
     }
 
     private static func pulse(_ time: TimeInterval, _ index: Int) -> Double {

@@ -23,10 +23,11 @@ nonisolated enum Spending {
         defaults.double(forKey: key(for: date))
     }
 
-    /// "$0.42", "< $0.01", "$0".
-    static func formatted(_ usd: Double) -> String {
-        if usd <= 0 { return "$0" }
-        if usd < 0.01 { return "<\u{00A0}$0.01" }
-        return "$" + String(format: "%.2f", usd)
+    /// "$0.42", "< $0.01", "$0" in English; "0,42 $US" and so on in French.
+    static func formatted(_ usd: Double, locale: Locale = .autoupdatingCurrent) -> String {
+        let style = FloatingPointFormatStyle<Double>.Currency(code: "USD", locale: locale)
+        if usd <= 0 { return 0.0.formatted(style.precision(.fractionLength(0))) }
+        if usd < 0.01 { return "<\u{00A0}" + 0.01.formatted(style.precision(.fractionLength(2))) }
+        return usd.formatted(style.precision(.fractionLength(2)))
     }
 }

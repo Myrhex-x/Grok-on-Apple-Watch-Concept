@@ -16,31 +16,37 @@ nonisolated enum Reasoning: String, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .none: "None"
-        case .low: "Short"
-        case .high: "Deep"
+        case .none: String(localized: "None")
+        case .low: String(localized: "Short")
+        case .high: String(localized: "Deep")
         }
     }
 }
 
 /// The language the questions are spoken in, for SpaceXAI's transcription.
 nonisolated enum SpeechLanguage: String, CaseIterable, Identifiable, Sendable {
-    case french = "fr"
     case english = "en"
+    case french = "fr"
     case automatic = "auto"
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .french: "French"
-        case .english: "English"
-        case .automatic: "Automatic"
+        case .english: String(localized: "English")
+        case .french: String(localized: "French")
+        case .automatic: String(localized: "Automatic")
         }
     }
 
     /// What the transcription takes (nil: SpaceXAI detects the language).
     var code: String? { self == .automatic ? nil : rawValue }
+
+    /// The watch's own language when it is one of these, else SpaceXAI detects it.
+    static var deviceDefault: SpeechLanguage {
+        let code = Locale.preferredLanguages.first.flatMap { Locale(identifier: $0).language.languageCode?.identifier }
+        return code.flatMap(SpeechLanguage.init(rawValue:)) ?? .automatic
+    }
 }
 
 @Observable
@@ -90,7 +96,7 @@ final class Preferences {
         webSearch = defaults.object(forKey: Keys.webSearch) as? Bool ?? true
         xSearch = defaults.object(forKey: Keys.xSearch) as? Bool ?? false
         dictateOnOpen = defaults.object(forKey: Keys.dictateOnOpen) as? Bool ?? true
-        speechLanguage = defaults.string(forKey: Keys.speechLanguage).flatMap(SpeechLanguage.init(rawValue:)) ?? .english
+        speechLanguage = defaults.string(forKey: Keys.speechLanguage).flatMap(SpeechLanguage.init(rawValue:)) ?? .deviceDefault
         models = defaults.data(forKey: Keys.models).flatMap { try? JSONDecoder().decode([GrokModelInfo].self, from: $0) } ?? []
     }
 

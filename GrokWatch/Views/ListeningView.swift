@@ -29,7 +29,7 @@ struct ListeningView: View {
             }
             .frame(height: 112)
             if chat.voice == .transcribing {
-                TypingIndicator(label: "Transcribing")
+                TypingIndicator(label: String(localized: "Transcribing"))
             } else {
                 Text("I’m listening")
                     .font(.headline)

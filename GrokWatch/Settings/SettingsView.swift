@@ -56,7 +56,7 @@ struct SettingsView: View {
 
             Section("SpaceXAI account") {
                 NavigationLink(value: Page.key) {
-                    LabeledContent("Key", value: chat.keyHint ?? "None")
+                    LabeledContent("Key", value: chat.keyHint ?? String(localized: "None"))
                 }
                 LabeledContent("This month", value: Spending.formatted(Spending.total()))
             }

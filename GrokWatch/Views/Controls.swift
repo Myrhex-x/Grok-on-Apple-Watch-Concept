@@ -31,7 +31,7 @@ struct MicButton: View {
 /// Type a question.
 struct KeyboardButton: View {
     @Environment(ChatModel.self) private var chat
-    var title: String?
+    var title: LocalizedStringKey?
 
     var body: some View {
         TextFieldLink(prompt: Text("Your question")) {

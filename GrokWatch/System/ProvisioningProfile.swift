@@ -48,42 +48,43 @@ nonisolated enum ProvisioningProfile {
 
     // MARK: - Words and reminders
 
-    private static let english = Locale(identifier: "en_US")
-
-    static func dayText(_ date: Date, timeZone: TimeZone = .current) -> String {
-        date.formatted(Date.FormatStyle(date: .long, time: .omitted, locale: english, timeZone: timeZone))
+    static func dayText(_ date: Date, timeZone: TimeZone = .current, locale: Locale = .autoupdatingCurrent) -> String {
+        date.formatted(Date.FormatStyle(date: .long, time: .omitted, locale: locale, timeZone: timeZone))
     }
 
-    static func timeText(_ date: Date, timeZone: TimeZone = .current) -> String {
-        date.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: english, timeZone: timeZone))
+    static func timeText(_ date: Date, timeZone: TimeZone = .current, locale: Locale = .autoupdatingCurrent) -> String {
+        date.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: locale, timeZone: timeZone))
     }
 
     /// The line shown in the app when the end is near.
     static func notice(daysLeft: Int) -> String {
         switch daysLeft {
-        case ..<1: "Grok stops working on this watch today. Install it again from the Mac."
-        case 1: "Grok stops working on this watch tomorrow. Install it again from the Mac."
-        default: "Grok stops working on this watch in \(daysLeft) days. Install it again from the Mac."
+        case ..<1: String(localized: "Grok stops working on this watch today. Install it again from the Mac.")
+        case 1: String(localized: "Grok stops working on this watch tomorrow. Install it again from the Mac.")
+        default: String(localized: "Grok stops working on this watch in \(daysLeft) days. Install it again from the Mac.")
         }
     }
 
     /// A week before at 10:00, two days before at 10:00, and the evening before at 18:00, local
     /// time. Reminders already past are left out.
-    static func reminders(for expiry: Date, now: Date, calendar: Calendar = .current) -> [ExpiryReminder] {
+    static func reminders(for expiry: Date, now: Date, calendar: Calendar = .current,
+                          locale: Locale = .autoupdatingCurrent) -> [ExpiryReminder] {
         let plan: [(id: String, days: Int, hour: Int)] = [
             ("expiry-7", -7, 10),
             ("expiry-2", -2, 10),
             ("expiry-1", -1, 18),
         ]
-        let when = "on \(dayText(expiry, timeZone: calendar.timeZone)) at \(timeText(expiry, timeZone: calendar.timeZone))"
+        let day = dayText(expiry, timeZone: calendar.timeZone, locale: locale)
+        let time = timeText(expiry, timeZone: calendar.timeZone, locale: locale)
+        let when = String(localized: "on \(day) at \(time)")
         return plan.compactMap { step in
             guard let day = calendar.date(byAdding: .day, value: step.days, to: calendar.startOfDay(for: expiry)),
                   let date = calendar.date(bySettingHour: step.hour, minute: 0, second: 0, of: day),
                   date > now, date < expiry else { return nil }
             let body: String = switch step.days {
-            case -7: "Grok stops working on your watch in a week, \(when). Connect the iPhone to the Mac and install it again to keep it."
-            case -2: "Two days left before Grok stops working on your watch (\(when)). Install it again from the Mac."
-            default: "Grok stops working on your watch tomorrow at \(timeText(expiry, timeZone: calendar.timeZone)). Install it again from the Mac tonight."
+            case -7: String(localized: "Grok stops working on your watch in a week, \(when). Connect the iPhone to the Mac and install it again to keep it.")
+            case -2: String(localized: "Two days left before Grok stops working on your watch (\(when)). Install it again from the Mac.")
+            default: String(localized: "Grok stops working on your watch tomorrow at \(time). Install it again from the Mac tonight.")
             }
             return ExpiryReminder(id: step.id, date: date, body: body)
         }

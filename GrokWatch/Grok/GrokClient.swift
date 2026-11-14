@@ -132,11 +132,11 @@ nonisolated enum GrokActivity: Equatable, Sendable {
 
     var title: String {
         switch self {
-        case .thinking: "Thinking"
-        case .searchingWeb: "Searching the web"
-        case .searchingX: "Searching X"
-        case .searching: "Searching"
-        case .runningCode: "Calculating"
+        case .thinking: String(localized: "Thinking")
+        case .searchingWeb: String(localized: "Searching the web")
+        case .searchingX: String(localized: "Searching X")
+        case .searching: String(localized: "Searching")
+        case .runningCode: String(localized: "Calculating")
         }
     }
 }
@@ -163,18 +163,18 @@ nonisolated enum GrokError: LocalizedError, Equatable, Sendable {
 
     var errorDescription: String? {
         switch self {
-        case .missingKey: "Add your SpaceXAI key in Settings."
-        case .invalidKey: "SpaceXAI rejects this key. Check it in Settings."
-        case .noCredits: "SpaceXAI refused the request. Check your team’s credits on console.x.ai."
-        case .rateLimited: "Too many requests for this key. Try again in a moment."
-        case .modelUnavailable(let model): "The model \(model) isn’t available for this key."
+        case .missingKey: String(localized: "Add your SpaceXAI key in Settings.")
+        case .invalidKey: String(localized: "SpaceXAI rejects this key. Check it in Settings.")
+        case .noCredits: String(localized: "SpaceXAI refused the request. Check your team’s credits on console.x.ai.")
+        case .rateLimited: String(localized: "Too many requests for this key. Try again in a moment.")
+        case .modelUnavailable(let model): String(localized: "The model \(model) isn’t available for this key.")
         case let .server(code, message):
-            message.isEmpty ? "SpaceXAI returned an error (\(code))." : "SpaceXAI error \(code): \(message)"
-        case .offline: "No connection. The watch needs Wi-Fi, cellular or the iPhone nearby."
-        case .connectionLost: "The connection dropped before the answer was done."
-        case .timedOut: "SpaceXAI is taking too long to answer. Try again."
-        case .network(let message): "Can’t reach SpaceXAI: \(message)"
-        case .badResponse(let message): "Unexpected answer from SpaceXAI: \(message)"
+            message.isEmpty ? String(localized: "SpaceXAI returned an error (\(code)).") : String(localized: "SpaceXAI error \(code): \(message)")
+        case .offline: String(localized: "No connection. The watch needs Wi-Fi, cellular or the iPhone nearby.")
+        case .connectionLost: String(localized: "The connection dropped before the answer was done.")
+        case .timedOut: String(localized: "SpaceXAI is taking too long to answer. Try again.")
+        case .network(let message): String(localized: "Can’t reach SpaceXAI: \(message)")
+        case .badResponse(let message): String(localized: "Unexpected answer from SpaceXAI: \(message)")
         }
     }
 }

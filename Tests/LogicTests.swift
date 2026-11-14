@@ -221,7 +221,7 @@ struct LogicTests {
         calendar.timeZone = TimeZone(identifier: "Europe/Paris")!
         let expiry = calendar.date(from: DateComponents(year: 2027, month: 7, day: 14, hour: 16, minute: 46))!
         let now = calendar.date(from: DateComponents(year: 2026, month: 11, day: 13, hour: 23))!
-        let list = ProvisioningProfile.reminders(for: expiry, now: now, calendar: calendar)
+        let list = ProvisioningProfile.reminders(for: expiry, now: now, calendar: calendar, locale: Locale(identifier: "en_US"))
         check(list.map(\.id) == ["expiry-7", "expiry-2", "expiry-1"], "three reminders")
         let parts = list.map { calendar.dateComponents([.month, .day, .hour], from: $0.date) }
         check(parts.map(\.day) == [7, 12, 13] && parts.map(\.hour) == [10, 10, 18], "a week, two days, the evening before")
@@ -230,6 +230,7 @@ struct LogicTests {
         check(ProvisioningProfile.reminders(for: expiry, now: late, calendar: calendar).map(\.id) == ["expiry-1"], "past reminders left out")
         let info = InstallInfo(profileExpiry: expiry, certificateExpiry: nil)
         check(info.daysLeft(from: now, calendar: calendar) == 243, "days left: \(info.daysLeft(from: now, calendar: calendar))")
+        check(ProvisioningProfile.dayText(expiry, timeZone: calendar.timeZone, locale: Locale(identifier: "fr_FR")) == "14 juillet 2027", "date in French")
         check(ProvisioningProfile.notice(daysLeft: 1).contains("tomorrow"), "tomorrow")
         check(ProvisioningProfile.notice(daysLeft: 0).contains("today"), "today")
     }
@@ -241,9 +242,11 @@ struct LogicTests {
         Spending.add(0.5, on: date, defaults: defaults)
         Spending.add(-1, on: date, defaults: defaults)
         check(abs(Spending.total(on: date, defaults: defaults) - 0.504) < 1e-9, "adds up, ignores nonsense")
-        check(Spending.formatted(0.504) == "$0.50", "format")
-        check(Spending.formatted(0.004) == "<\u{00A0}$0.01", "tiny amounts")
-        check(Spending.formatted(0) == "$0", "zero")
+        let english = Locale(identifier: "en_US")
+        check(Spending.formatted(0.504, locale: english) == "$0.50", "format")
+        check(Spending.formatted(0.004, locale: english) == "<\u{00A0}$0.01", "tiny amounts")
+        check(Spending.formatted(0, locale: english) == "$0", "zero")
+        check(Spending.formatted(0.504, locale: Locale(identifier: "fr_FR")).hasPrefix("0,50"), "French amounts")
     }
 
     static func speech() {
@@ -268,13 +271,14 @@ struct LogicTests {
     static func prompt() {
         let zone = TimeZone(identifier: "Europe/Paris")!
         let now = ISO8601DateFormatter().date(from: "2026-11-13T13:05:00Z")!
-        let text = Prompt.instructions(now: now, timeZone: zone, canSearch: true)
+        let text = Prompt.instructions(now: now, timeZone: zone, canSearch: true, language: "English")
         check(text.contains("Friday, November 13, 2026"), "English date")
         check(text.contains("2:05"), "local time")
         check(text.contains("Reply in English"), "English first")
+        check(Prompt.instructions(now: now, timeZone: zone, canSearch: true, language: "French").contains("Reply in French"), "the watch's language")
         check(text.contains("search the web before answering"), "search line with tools")
         check(text.contains("who leads a country"), "who holds an office counts as current")
-        let offline = Prompt.instructions(now: now, timeZone: zone, canSearch: false)
+        let offline = Prompt.instructions(now: now, timeZone: zone, canSearch: false, language: "English")
         check(!offline.contains("search the web") && offline.contains("may be out of date"), "no search line without tools, a warning instead")
         check(!text.contains("\u{2014}") && !text.contains("\u{2013}"), "no long dashes")
     }

@@ -76,22 +76,22 @@ struct KeySetupView: View {
         do {
             let models = try await GrokClient(apiKey: key).listModels()
             guard GrokKeyStore.save(key) else {
-                step = .failed("The watch couldn’t save the key.")
+                step = .failed(String(localized: "The watch couldn’t save the key."))
                 return
             }
             preferences.adopt(models)
-            await finish("Key checked and saved.")
+            await finish(String(localized: "Key checked and saved."))
         } catch GrokError.invalidKey {
             step = .failed(GrokError.invalidKey.localizedDescription)
         } catch {
             // Offline, or a key allowed to answer but not to list models: keep it, the first
             // question will tell. Only a key SpaceXAI rejects outright is refused.
             guard GrokKeyStore.save(key) else {
-                step = .failed("The watch couldn’t save the key.")
+                step = .failed(String(localized: "The watch couldn’t save the key."))
                 return
             }
             let reason = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-            await finish("Key saved without checking it: \(reason)")
+            await finish(String(localized: "Key saved without checking it: \(reason)"))
         }
     }
 

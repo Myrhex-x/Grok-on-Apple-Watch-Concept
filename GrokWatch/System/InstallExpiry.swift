@@ -39,7 +39,7 @@ nonisolated enum InstallExpiry {
         let calendar = Calendar.current
         for reminder in ProvisioningProfile.reminders(for: info.expiry, now: Date(), calendar: calendar) {
             let content = UNMutableNotificationContent()
-            content.title = "Grok stops working soon"
+            content.title = String(localized: "Grok stops working soon")
             content.body = reminder.body
             content.sound = .default
             let parts = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.date)

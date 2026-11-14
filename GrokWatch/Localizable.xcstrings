@@ -1,0 +1,887 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {},
+    "Add key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter la clé"
+          }
+        }
+      }
+    },
+    "Add your SpaceXAI key in Settings." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajoutez votre clé SpaceXAI dans les Réglages."
+          }
+        }
+      }
+    },
+    "Answer interrupted." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réponse interrompue."
+          }
+        }
+      }
+    },
+    "Ask a question out loud" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poser une question à voix haute"
+          }
+        }
+      }
+    },
+    "Automatic" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatique"
+          }
+        }
+      }
+    },
+    "Calculating" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calcul"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        }
+      }
+    },
+    "Can’t reach SpaceXAI: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de joindre SpaceXAI : %@"
+          }
+        }
+      }
+    },
+    "Checking…" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérification…"
+          }
+        }
+      }
+    },
+    "Deep" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approfondie"
+          }
+        }
+      }
+    },
+    "Delete key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer la clé"
+          }
+        }
+      }
+    },
+    "English" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anglais"
+          }
+        }
+      }
+    },
+    "French" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Français"
+          }
+        }
+      }
+    },
+    "Grok" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok"
+          }
+        }
+      }
+    },
+    "Grok answers with your own API key. It stays on the watch and is only used to reach api.x.ai." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok répond avec votre propre clé d’API. Elle reste sur la montre et ne sert qu’à joindre api.x.ai."
+          }
+        }
+      }
+    },
+    "Grok can’t use the microphone. Allow it in Settings > Privacy & Security > Microphone." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok n’a pas accès au micro. Autorisez-le dans Réglages > Confidentialité et sécurité > Micro."
+          }
+        }
+      }
+    },
+    "Grok didn’t answer. Try again." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok n’a rien répondu. Réessayez."
+          }
+        }
+      }
+    },
+    "Grok is writing" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok écrit"
+          }
+        }
+      }
+    },
+    "Grok only searches when the question needs it. An X search costs about $0.10." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok ne cherche que si la question le demande. Une recherche sur X coûte environ 0,10 $."
+          }
+        }
+      }
+    },
+    "Grok stops working on this watch in %lld days. Install it again from the Mac." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok s’arrêtera dans %lld jours sur cette montre. Relancez l’installation depuis le Mac."
+          }
+        }
+      }
+    },
+    "Grok stops working on this watch today. Install it again from the Mac." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok s’arrête aujourd’hui sur cette montre. Relancez l’installation depuis le Mac."
+          }
+        }
+      }
+    },
+    "Grok stops working on this watch tomorrow. Install it again from the Mac." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok s’arrête demain sur cette montre. Relancez l’installation depuis le Mac."
+          }
+        }
+      }
+    },
+    "Grok stops working on your watch in a week, %@. Connect the iPhone to the Mac and install it again to keep it." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok s’arrêtera sur votre montre dans une semaine, %@. Branchez l’iPhone au Mac et relancez l’installation pour le garder."
+          }
+        }
+      }
+    },
+    "Grok stops working on your watch tomorrow at %@. Install it again from the Mac tonight." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok s’arrête demain sur votre montre, à %@. Relancez l’installation depuis le Mac ce soir."
+          }
+        }
+      }
+    },
+    "Grok stops working soon" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grok expire bientôt"
+          }
+        }
+      }
+    },
+    "I didn’t hear anything. Tap the microphone and speak." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je n’ai rien entendu. Touchez le micro et parlez."
+          }
+        }
+      }
+    },
+    "Installation" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installation"
+          }
+        }
+      }
+    },
+    "I’m listening" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je vous écoute"
+          }
+        }
+      }
+    },
+    "Key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé"
+          }
+        }
+      }
+    },
+    "Key checked and saved." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé vérifiée et enregistrée."
+          }
+        }
+      }
+    },
+    "Key saved without checking it: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé enregistrée sans vérification : %@"
+          }
+        }
+      }
+    },
+    "Listen on open" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écouter à l’ouverture"
+          }
+        }
+      }
+    },
+    "Microphone" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Micro"
+          }
+        }
+      }
+    },
+    "Model" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle"
+          }
+        }
+      }
+    },
+    "New conversation" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle conversation"
+          }
+        }
+      }
+    },
+    "No connection. The watch needs Wi-Fi, cellular or the iPhone nearby." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas de connexion. La montre a besoin du Wi-Fi, du réseau cellulaire ou de l’iPhone à proximité."
+          }
+        }
+      }
+    },
+    "None" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune"
+          }
+        }
+      }
+    },
+    "Paste key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coller la clé"
+          }
+        }
+      }
+    },
+    "Previous conversation" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversation précédente"
+          }
+        }
+      }
+    },
+    "Saved" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrée"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche"
+          }
+        }
+      }
+    },
+    "Searching" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche"
+          }
+        }
+      }
+    },
+    "Searching X" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche sur X"
+          }
+        }
+      }
+    },
+    "Searching the web" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche sur le web"
+          }
+        }
+      }
+    },
+    "Send" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages"
+          }
+        }
+      }
+    },
+    "Short" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Courte"
+          }
+        }
+      }
+    },
+    "Sources: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sources : %@"
+          }
+        }
+      }
+    },
+    "SpaceXAI API key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé d’API SpaceXAI"
+          }
+        }
+      }
+    },
+    "SpaceXAI account" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compte SpaceXAI"
+          }
+        }
+      }
+    },
+    "SpaceXAI error %lld: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur SpaceXAI %1$lld : %2$@"
+          }
+        }
+      }
+    },
+    "SpaceXAI is taking too long to answer. Try again." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpaceXAI met trop de temps à répondre. Réessayez."
+          }
+        }
+      }
+    },
+    "SpaceXAI key received from the Mac. Grok is ready." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clé SpaceXAI reçue du Mac. Grok est prêt."
+          }
+        }
+      }
+    },
+    "SpaceXAI refused the request. Check your team’s credits on console.x.ai." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpaceXAI a refusé la demande. Vérifiez les crédits de votre équipe sur console.x.ai."
+          }
+        }
+      }
+    },
+    "SpaceXAI rejects this key. Check it in Settings." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpaceXAI refuse cette clé. Vérifiez-la dans les Réglages."
+          }
+        }
+      }
+    },
+    "SpaceXAI returned an error (%lld)." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpaceXAI a renvoyé une erreur (%lld)."
+          }
+        }
+      }
+    },
+    "Speak" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parler"
+          }
+        }
+      }
+    },
+    "Spoken language" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue parlée"
+          }
+        }
+      }
+    },
+    "Stop the answer" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter la réponse"
+          }
+        }
+      }
+    },
+    "Test build, no end date." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version de test, sans date de fin."
+          }
+        }
+      }
+    },
+    "The answer didn’t come through." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La réponse n’est pas arrivée."
+          }
+        }
+      }
+    },
+    "The connection dropped before the answer was done." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connexion a été coupée avant la fin de la réponse."
+          }
+        }
+      }
+    },
+    "The key stays in the watch’s Keychain. It isn’t backed up anywhere, and it’s only ever sent to api.x.ai." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clé reste dans le trousseau de la montre. Elle n’est ni sauvegardée ailleurs, ni envoyée ailleurs qu’à api.x.ai."
+          }
+        }
+      }
+    },
+    "The microphone couldn’t start." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le micro n’a pas pu démarrer."
+          }
+        }
+      }
+    },
+    "The microphone isn’t available right now." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le micro n’est pas disponible pour le moment."
+          }
+        }
+      }
+    },
+    "The microphone isn’t responding. Try again in a moment." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le micro ne répond pas. Réessayez dans un instant."
+          }
+        }
+      }
+    },
+    "The microphone stops when you stop talking. SpaceXAI turns the audio into text, for about $0.10 per hour of audio." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le micro s’arrête quand vous ne parlez plus. SpaceXAI transforme l’audio en texte, pour environ 0,10 $ par heure d’audio."
+          }
+        }
+      }
+    },
+    "The model %@ isn’t available for this key." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le modèle %@ n’est pas disponible pour cette clé."
+          }
+        }
+      }
+    },
+    "The watch couldn’t save the key." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La montre n’a pas pu enregistrer la clé."
+          }
+        }
+      }
+    },
+    "Thinking" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réflexion"
+          }
+        }
+      }
+    },
+    "This month" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce mois-ci"
+          }
+        }
+      }
+    },
+    "To extend it, connect the iPhone to the Mac and install again. A reminder comes a week before." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour prolonger, branchez l’iPhone au Mac et relancez l’installation. Un rappel arrive une semaine avant."
+          }
+        }
+      }
+    },
+    "Too many requests for this key. Try again in a moment." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trop de demandes pour cette clé. Réessayez dans un instant."
+          }
+        }
+      }
+    },
+    "Transcribing" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transcription"
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réessayer"
+          }
+        }
+      }
+    },
+    "Two days left before Grok stops working on your watch (%@). Install it again from the Mac." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus que deux jours avant que Grok s’arrête sur votre montre (%@). Relancez l’installation depuis le Mac."
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire"
+          }
+        }
+      }
+    },
+    "Type a question" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire une question"
+          }
+        }
+      }
+    },
+    "Unexpected answer from SpaceXAI: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réponse inattendue de SpaceXAI : %@"
+          }
+        }
+      }
+    },
+    "Until" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jusqu’au"
+          }
+        }
+      }
+    },
+    "Web" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web"
+          }
+        }
+      }
+    },
+    "When the text field opens, the iPhone offers to type for the watch: paste the key there. It starts with xai-." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quand la saisie s’ouvre, l’iPhone propose de taper à la place de la montre : collez-y la clé, qui commence par xai-."
+          }
+        }
+      }
+    },
+    "With no thinking, the answer comes fastest." : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans réflexion, la réponse arrive le plus vite."
+          }
+        }
+      }
+    },
+    "X" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X"
+          }
+        }
+      }
+    },
+    "You: %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous : %@"
+          }
+        }
+      }
+    },
+    "Your SpaceXAI key" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre clé SpaceXAI"
+          }
+        }
+      }
+    },
+    "Your question" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre question"
+          }
+        }
+      }
+    },
+    "on %@ at %@" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "le %1$@ à %2$@"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

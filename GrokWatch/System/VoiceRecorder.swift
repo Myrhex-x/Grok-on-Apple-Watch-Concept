@@ -42,7 +42,7 @@ final class VoiceRecorder {
     func start(_ finish: @escaping (Outcome) -> Void) async {
         guard !isRecording, !isStarting else { return }
         guard await AVAudioApplication.requestRecordPermission() else {
-            finish(.failed("Grok can’t use the microphone. Allow it in Settings > Privacy & Security > Microphone."))
+            finish(.failed(String(localized: "Grok can’t use the microphone. Allow it in Settings > Privacy & Security > Microphone.")))
             return
         }
         isStarting = true
@@ -103,7 +103,7 @@ final class VoiceRecorder {
             Task.detached {
                 try? await Task.sleep(for: timeout)
                 if once.claim() {
-                    continuation.resume(returning: .failure(OpenFailure(message: "The microphone isn’t responding. Try again in a moment.")))
+                    continuation.resume(returning: .failure(OpenFailure(message: String(localized: "The microphone isn’t responding. Try again in a moment."))))
                 }
             }
         }
@@ -115,7 +115,7 @@ final class VoiceRecorder {
             try session.setCategory(.record, mode: .default)
             try session.setActive(true)
         } catch {
-            return .failure(OpenFailure(message: "The microphone isn’t available right now."))
+            return .failure(OpenFailure(message: String(localized: "The microphone isn’t available right now.")))
         }
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("question-\(UUID().uuidString)")
@@ -128,12 +128,12 @@ final class VoiceRecorder {
         ]
         guard let recorder = try? AVAudioRecorder(url: url, settings: settings) else {
             try? session.setActive(false, options: .notifyOthersOnDeactivation)
-            return .failure(OpenFailure(message: "The microphone couldn’t start."))
+            return .failure(OpenFailure(message: String(localized: "The microphone couldn’t start.")))
         }
         recorder.isMeteringEnabled = true
         guard recorder.record() else {
             try? session.setActive(false, options: .notifyOthersOnDeactivation)
-            return .failure(OpenFailure(message: "The microphone couldn’t start."))
+            return .failure(OpenFailure(message: String(localized: "The microphone couldn’t start.")))
         }
         return .success(RecorderBox(recorder))
     }
