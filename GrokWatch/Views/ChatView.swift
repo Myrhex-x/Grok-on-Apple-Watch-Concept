@@ -89,6 +89,7 @@ struct ChatView: View {
             }
         case .background:
             comingBack = true
+            chat.wentToBackground()
         default:
             break
         }
@@ -96,7 +97,9 @@ struct ChatView: View {
 
     /// Opening the app for a new question starts listening right away.
     private func dictateIfWanted() {
-        guard preferences.dictateOnOpen, chat.hasKey, chat.messages.isEmpty, !chat.isBusy, path.isEmpty else { return }
+        // Not the moment the key arrives from the Mac: the notification question comes first.
+        guard preferences.dictateOnOpen, chat.hasKey, chat.keyImportNotice == nil,
+              chat.messages.isEmpty, !chat.isBusy, path.isEmpty else { return }
         #if DEBUG
         if DebugHooks.noAutoDictation { return }
         #endif

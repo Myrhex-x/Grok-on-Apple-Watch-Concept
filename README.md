@@ -14,10 +14,16 @@ A personal Apple Watch app (watch only, no iPhone app) that talks to Grok with y
 ## Setting up
 
 1. Install it (below).
-2. Open Grok on the watch, tap "Add key", then tap the field. On the iPhone, accept the offer to type for the watch and paste your key (it starts with `xai-`). The app checks it with SpaceXAI before keeping it.
-3. Allow notifications when asked: they carry answers that land with your wrist down, and the reminder before the install ends.
+2. Give it your key from the Mac: copy the key (console.x.ai or your password manager), then run
 
-The key lives only in the watch's Keychain (this device only, not backed up) and is only ever sent to `api.x.ai`. Requests go with `store: false`, so the conversation is not kept on SpaceXAI's side.
+   ```bash
+   ./install-key.sh
+   ```
+
+   It reads the key from the clipboard without showing it, checks it with SpaceXAI (listing models is free), copies it into Grok's own folder on the watch and opens Grok, which moves it into the watch's Keychain and deletes the file. Nothing stays on the Mac. (Typing it on the watch also works: "Add key", then the iPhone's offer to type for the watch.)
+3. Allow notifications when the watch asks: they carry answers that land with your wrist down, and the reminder before the install ends.
+
+The key lives only in the watch's Keychain (this device only, not backed up) and is only ever sent to `api.x.ai`. Requests go with `store: false`, so the conversation is not kept on SpaceXAI's side. To change the key later, copy the new one and run `./install-key.sh` again.
 
 ## Installing, and installing again
 

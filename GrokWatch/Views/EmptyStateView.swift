@@ -14,6 +14,9 @@ struct EmptyStateView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(spacing: 10) {
+                    if let notice = chat.keyImportNotice {
+                        NoticeCard(text: notice, systemImage: "checkmark.circle.fill")
+                    }
                     if let notice = chat.expiryNotice {
                         NoticeCard(text: notice)
                     }

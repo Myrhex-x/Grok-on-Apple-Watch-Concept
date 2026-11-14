@@ -30,6 +30,8 @@ final class ChatModel {
     private(set) var scrollTarget: UUID?
     private(set) var keyHint: String?
     private(set) var install: InstallInfo?
+    /// Set when the key just arrived from the Mac, until the first question.
+    private(set) var keyImportNotice: String?
 
     @ObservationIgnored private var task: Task<Void, Never>?
 
@@ -39,8 +41,10 @@ final class ChatModel {
         current.settleUnfinished()
         conversation = current
         previous = ConversationStore.load(.previous)
+        let imported = KeyImport.run()
         keyHint = GrokKeyStore.hint()
         install = InstallExpiry.current()
+        if imported { keyArrivedFromMac() }
         #if DEBUG
         applyDebugHooks()
         #endif
@@ -66,11 +70,30 @@ final class ChatModel {
     func becameActive() {
         Notifier.clearDeliveredAnswers()
         install = InstallExpiry.current()
+        if KeyImport.run() {
+            keyChanged()
+            keyArrivedFromMac()
+        }
+    }
+
+    /// The key came from install-key.sh: say so, then ask for notifications (answers that land
+    /// with the wrist down, the reminder before the install ends) and fetch the model list.
+    private func keyArrivedFromMac() {
+        keyImportNotice = "SpaceXAI key received from the Mac. Grok is ready."
+        Task {
+            await Notifier.requestAuthorizationIfNeeded()
+            await InstallExpiry.refreshReminders()
+            await refreshModels()
+        }
     }
 
     /// The app came back on screen from the background (opened again, not just the wrist raised).
     func reopened() {
         if !isBusy, isStale { archiveAndStartFresh() }
+    }
+
+    func wentToBackground() {
+        keyImportNotice = nil
     }
 
     func keyChanged() {
@@ -88,6 +111,7 @@ final class ChatModel {
         let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty, !isBusy else { return }
         if isStale { archiveAndStartFresh() }
+        keyImportNotice = nil
         let question = ChatMessage(role: .user, text: text)
         conversation.messages.append(question)
         conversation.updatedAt = Date()

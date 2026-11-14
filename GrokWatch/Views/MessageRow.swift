@@ -105,15 +105,16 @@ struct TypingIndicator: View {
     }
 }
 
-/// A short line about the install (it ends soon).
+/// A short line about the app itself (the key arrived, the install ends soon).
 struct NoticeCard: View {
     let text: String
+    var systemImage = "clock.badge.exclamationmark"
 
     var body: some View {
         Label {
             Text(text)
         } icon: {
-            Image(systemName: "clock.badge.exclamationmark")
+            Image(systemName: systemImage)
         }
         .font(.footnote)
         .padding(8)
