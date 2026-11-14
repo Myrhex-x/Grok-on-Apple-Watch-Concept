@@ -61,7 +61,7 @@ final class VoiceRecorder {
 
     // MARK: - Opening the microphone, away from the screen
 
-    private final class RecorderBox: @unchecked Sendable {
+    private nonisolated final class RecorderBox: @unchecked Sendable {
         let recorder: AVAudioRecorder
         init(_ recorder: AVAudioRecorder) { self.recorder = recorder }
     }
@@ -70,8 +70,9 @@ final class VoiceRecorder {
         let message: String
     }
 
-    /// Lets exactly one of two racers finish the wait.
-    private final class Once: @unchecked Sendable {
+    /// Lets exactly one of two racers finish the wait. Both run off the main actor, so it is not
+    /// isolated to it; the lock is what keeps it safe.
+    private nonisolated final class Once: @unchecked Sendable {
         private let lock = NSLock()
         private var done = false
         func claim() -> Bool {

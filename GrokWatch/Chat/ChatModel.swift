@@ -188,8 +188,9 @@ final class ChatModel {
         voiceNotice = nil
         voice = .listening
         WKInterfaceDevice.current().play(.start)
-        Task {
-            await recorder.start { [weak self] outcome in
+        let recorder = recorder
+        Task { [weak self] in
+            await recorder.start { outcome in
                 self?.voiceFinished(outcome)
             }
         }
