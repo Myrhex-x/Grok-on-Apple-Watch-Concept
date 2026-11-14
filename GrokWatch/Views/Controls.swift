@@ -48,16 +48,17 @@ struct KeyboardButton: View {
     }
 }
 
-/// White disc, black glyph: the app's one loud control.
-struct WhiteDiscButtonStyle: ButtonStyle {
+/// A round button: white with a black glyph for the main action, a soft grey disc for the others.
+struct DiscButtonStyle: ButtonStyle {
     var diameter: CGFloat = 70
+    var prominent = true
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: diameter * 0.38, weight: .semibold))
-            .foregroundStyle(.black)
+            .foregroundStyle(prominent ? Color.black : Color.white)
             .frame(width: diameter, height: diameter)
-            .background(Circle().fill(.white))
+            .background(Circle().fill(prominent ? Color.white : Color.white.opacity(0.18)))
             .contentShape(Circle())
             .scaleEffect(configuration.isPressed ? 0.93 : 1)
             .opacity(configuration.isPressed ? 0.85 : 1)

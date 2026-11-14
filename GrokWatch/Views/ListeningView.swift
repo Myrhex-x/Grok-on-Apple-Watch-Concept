@@ -35,21 +35,21 @@ struct ListeningView: View {
                     .font(.headline)
             }
             Spacer(minLength: 0)
-            HStack(spacing: 10) {
+            HStack(spacing: 28) {
                 Button(action: chat.cancelListening) {
                     Image(systemName: "xmark")
                 }
+                .buttonStyle(DiscButtonStyle(diameter: 46, prominent: false))
                 .accessibilityLabel("Cancel")
                 if chat.voice == .listening {
                     Button(action: chat.stopListening) {
                         Image(systemName: "arrow.up")
                     }
-                    .tint(.white)
-                    .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.black)
+                    .buttonStyle(DiscButtonStyle(diameter: 46))
                     .accessibilityLabel("Send")
                 }
             }
+            .padding(.bottom, 4)
         }
     }
 }

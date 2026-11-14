@@ -23,7 +23,8 @@ struct ChatView: View {
     var body: some View {
         NavigationStack(path: $path) {
             content
-                .navigationTitle("Grok")
+                // While listening, only the microphone is on screen.
+                .navigationTitle(chat.voice == .off ? "Grok" : "")
                 .navigationDestination(for: Page.self) { page in
                     switch page {
                     case .settings: SettingsView()
@@ -42,10 +43,11 @@ struct ChatView: View {
                     if chat.hasKey && !chat.messages.isEmpty && chat.voice == .off {
                         ToolbarItemGroup(placement: .bottomBar) {
                             KeyboardButton()
+                            // A white circle, the same size as the two beside it.
                             MicButton()
-                                .controlSize(.large)
-                                .tint(.white)
                                 .buttonStyle(.borderedProminent)
+                                .buttonBorderShape(.circle)
+                                .tint(.white)
                                 .foregroundStyle(.black)
                             Button(action: chat.newConversation) {
                                 Image(systemName: "plus")
@@ -140,6 +142,7 @@ private struct ConversationView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .padding(.horizontal, 3)
                 // Room to scroll the last line clear of the buttons at the bottom.
                 .padding(.bottom, 52)
             }

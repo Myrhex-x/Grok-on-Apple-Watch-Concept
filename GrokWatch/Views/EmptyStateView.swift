@@ -22,7 +22,7 @@ struct EmptyStateView: View {
                     }
                     Spacer(minLength: 0)
                     MicButton()
-                        .buttonStyle(WhiteDiscButtonStyle(diameter: 72))
+                        .buttonStyle(DiscButtonStyle(diameter: 72))
                     Text("Speak")
                         .font(.headline)
                     if let notice = chat.voiceNotice {
@@ -35,6 +35,7 @@ struct EmptyStateView: View {
                         .buttonStyle(.bordered)
                         .buttonBorderShape(.capsule)
                         .controlSize(.small)
+                        .fixedSize()
                     if chat.hasPrevious {
                         Button("Previous conversation", action: chat.restorePrevious)
                             .font(.footnote)
