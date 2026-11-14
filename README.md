@@ -29,7 +29,13 @@ To install (or reinstall to extend it): unlock the iPhone and connect it to this
 ./install-on-watch.sh
 ```
 
-The first time, the watch needs Developer Mode (Settings > Privacy & Security > Developer Mode, which appears once Xcode has seen the watch) and may ask you to trust this Mac. If the script cannot install, open `GrokWatch.xcodeproj` in Xcode, pick the watch as the destination and press Cmd-R. Reinstalling keeps your key and settings.
+The first time:
+
+1. The iPhone must be paired with this Mac and in Developer Mode. A phone Xcode has never seen does not show up at all: `xcrun devicectl manage pair --device <its UDID>` makes it ask to trust the Mac, then turn on Settings > Privacy & Security > Developer Mode on the iPhone.
+2. watchOS 27 does not pair with the Mac through the iPhone. Open Device Hub (Xcode 27's device manager), choose File > Pair Nearby Device…, and leave it waiting. Put the watch on the same Wi-Fi as the Mac (turning Bluetooth off on the iPhone, in Settings, makes it switch), then on the watch open Settings > Privacy & Security > Developer Mode, turn it on and pair with the Mac. Turn Bluetooth back on afterwards.
+3. The script registers the watch with the developer account on its first run.
+
+If the script cannot install, open `GrokWatch.xcodeproj` in Xcode, pick the watch as the destination and press Cmd-R. Reinstalling keeps your key and settings.
 
 ## Building and testing
 

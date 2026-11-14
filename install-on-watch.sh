@@ -38,7 +38,8 @@ name=${rest#*$'\t'}
 echo "Building for $name..."
 
 if ! xcodebuild -project GrokWatch.xcodeproj -scheme GrokWatch -configuration Release \
-    -destination "platform=watchOS,id=$udid" -derivedDataPath build/dd -allowProvisioningUpdates \
+    -destination "platform=watchOS,id=$udid" -derivedDataPath build/dd \
+    -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
     build > build/install.log 2>&1; then
   /usr/bin/grep -E 'error:' build/install.log | sort -u | head -20
   echo "Build failed (full log: build/install.log)."
