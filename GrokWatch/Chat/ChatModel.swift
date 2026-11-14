@@ -28,6 +28,15 @@ final class ChatModel {
     private(set) var isBusy = false
     /// The question to bring into view, once per question.
     private(set) var scrollTarget: UUID?
+    /// Set when an answer that fits on screen is done: the view scrolls it clear of the buttons.
+    private(set) var revealedAnswer: UUID?
+
+    /// Answers up to this length fit above the bottom buttons with their question in view.
+    static let shortAnswer = 140
+
+    static func fitsOnScreen(_ message: ChatMessage) -> Bool {
+        message.state == .failed || AnswerText.plain(message.text).count <= shortAnswer
+    }
     private(set) var keyHint: String?
     private(set) var install: InstallInfo?
     /// Set when the key just arrived from the Mac, until the first question.
@@ -348,6 +357,9 @@ final class ChatModel {
             outcome = .failed
         }
         finishRun()
+        if let answer = messages.first(where: { $0.id == answerID }), Self.fitsOnScreen(answer) {
+            revealedAnswer = answerID
+        }
         if outcome != .stopped { announce(answerID) }
     }
 

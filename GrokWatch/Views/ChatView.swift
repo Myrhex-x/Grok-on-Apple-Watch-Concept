@@ -141,16 +141,16 @@ private struct ConversationView: View {
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
+                    // The end of the conversation. The bottom buttons keep their own room below it,
+                    // so scrolling here rests the last line just above them.
+                    Color.clear
+                        .frame(height: 1)
+                        .id(Self.end)
                 }
                 .padding(.horizontal, 3)
-                // Room to scroll the last line clear of the buttons at the bottom.
-                .padding(.bottom, 52)
             }
             .onAppear {
-                // Back on screen: show the last question with the start of its answer.
-                if let last = chat.messages.last(where: { $0.role == .user }) {
-                    proxy.scrollTo(last.id, anchor: .top)
-                }
+                showLatest(proxy, animated: false)
             }
             .onChange(of: chat.scrollTarget) { _, target in
                 guard let target else { return }
@@ -158,6 +158,24 @@ private struct ConversationView: View {
                     proxy.scrollTo(target, anchor: .top)
                 }
             }
+            .onChange(of: chat.revealedAnswer) { _, answer in
+                guard answer != nil else { return }
+                withAnimation(.easeOut(duration: 0.3)) {
+                    proxy.scrollTo(Self.end, anchor: .bottom)
+                }
+            }
+        }
+    }
+
+    private static let end = "end"
+
+    /// A short last answer is shown whole, above the buttons; a long one from its question, to be
+    /// read from the start.
+    private func showLatest(_ proxy: ScrollViewProxy, animated: Bool) {
+        if let last = chat.messages.last, last.role == .grok, last.state != .streaming, ChatModel.fitsOnScreen(last) {
+            proxy.scrollTo(Self.end, anchor: .bottom)
+        } else if let question = chat.messages.last(where: { $0.role == .user }) {
+            proxy.scrollTo(question.id, anchor: .top)
         }
     }
 }
