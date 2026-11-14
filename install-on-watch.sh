@@ -48,9 +48,14 @@ fi
 
 app=build/dd/Build/Products/Release-watchos/GrokWatch.app
 echo "Installing on $name..."
-if ! xcrun devicectl device install app --device "$identifier" "$app"; then
-  echo "The install did not go through. Open GrokWatch.xcodeproj in Xcode, pick the watch as the destination and press Cmd-R."
-  exit 1
+# The connection to the watch can drop mid-install (screen asleep, back on Bluetooth): one more try.
+if ! xcrun devicectl device install app --device "$identifier" "$app" --timeout 240; then
+  echo "The connection dropped; trying once more..."
+  sleep 3
+  if ! xcrun devicectl device install app --device "$identifier" "$app" --timeout 240; then
+    echo "The install did not go through. Wake the watch and run this again, or open GrokWatch.xcodeproj in Xcode, pick the watch as the destination and press Cmd-R."
+    exit 1
+  fi
 fi
 
 # The install runs until the profile or its development certificate ends, whichever comes first.
