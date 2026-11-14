@@ -94,4 +94,8 @@ Debug builds take launch arguments for the simulator: `-GrokWatchSimulated YES` 
 
 The commit history shows the app being built, one step at a time.
 
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
+
 This is an independent concept, not affiliated with or endorsed by SpaceXSI. Grok and SpaceXSI belong to their owners.
