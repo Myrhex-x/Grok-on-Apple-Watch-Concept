@@ -4,7 +4,7 @@ A personal Apple Watch app (watch only, no iPhone app) that talks to Grok with y
 
 ## Using it
 
-- **Open the app and speak.** For a new question, dictation starts on its own as the app opens (Settings, "Dictate on open" turns that off). Otherwise the white microphone goes straight into dictation in one tap.
+- **Open the app and speak.** For a new question the microphone opens by itself as the app opens (Settings, "Listen on open" turns that off); otherwise one tap on the white microphone. The watch taps your wrist when it listens, stops by itself about 1.5 seconds after you stop talking (or tap the arrow to send at once, the cross to cancel), and SpaceXAI turns the recording into text (`POST /v1/stt`, about 0.10 USD per hour of audio, in English unless Settings > Microphone says otherwise). watchOS has no speech recognition apps can use, and its own text input opens on the keyboard, which is why the app records and transcribes itself.
 - **Or type**: the keyboard button opens the watch keyboard (or Scribble). When the watch asks for text, the iPhone also offers to type it.
 - **The answer streams in** under your question. "Thinking" or "Searching the web" shows while Grok works; the square button stops it. The watch taps once when the answer is done.
 - **Lower your wrist** while it answers and nothing is lost: the answer finishes in the background and arrives as a notification.
@@ -61,5 +61,6 @@ Debug builds take launch arguments for the simulator: `-GrokWatchSimulated YES` 
 
 - `Grok/GrokClient.swift`: the SpaceXAI Responses API (`POST https://api.x.ai/v1/responses`), streamed. Web and X search are SpaceXAI's server-side tools, capped at 3 turns. If the chosen model is retired, the app switches to grok-4.3 (or the cheapest text model listed) and asks again.
 - `Chat/ChatModel.swift`: the conversation, the background time (`performExpiringActivity`), the tap or the notification when an answer lands.
-- `System/Dictation.swift`: one tap into dictation with WatchKit's text input controller (no suggestions, plain text).
+- `System/VoiceRecorder.swift` and `Grok/SpeechClient.swift`: the microphone (AAC, 16 kHz mono, stops on silence measured against the room's own noise; opened off the main thread with a 4-second limit) and SpaceXAI's speech to text (`language`, `format` and `keyterm` fields first, the file last).
+- `System/KeyImport.swift` and `install-key.sh`: the key from the Mac's clipboard into the watch's Keychain.
 - `System/ProvisioningProfile.swift` and `InstallExpiry.swift`: the end date from the embedded profile and its certificates, and the reminders.
