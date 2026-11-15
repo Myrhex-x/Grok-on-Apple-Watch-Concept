@@ -12,12 +12,12 @@
         }
       }
     },
-    "Add your SpaceXAI key in Settings." : {
+    "Add your SpaceXSI key in Settings." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajoutez votre clé SpaceXAI dans les Réglages."
+            "value" : "Ajoutez votre clé SpaceXSI dans les Réglages."
           }
         }
       }
@@ -72,12 +72,12 @@
         }
       }
     },
-    "Can’t reach SpaceXAI: %@" : {
+    "Can’t reach SpaceXSI: %@" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible de joindre SpaceXAI : %@"
+            "value" : "Impossible de joindre SpaceXSI : %@"
           }
         }
       }
@@ -482,82 +482,82 @@
         }
       }
     },
-    "SpaceXAI API key" : {
+    "SpaceXSI API key" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clé d’API SpaceXAI"
+            "value" : "Clé d’API SpaceXSI"
           }
         }
       }
     },
-    "SpaceXAI account" : {
+    "SpaceXSI account" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compte SpaceXAI"
+            "value" : "Compte SpaceXSI"
           }
         }
       }
     },
-    "SpaceXAI error %lld: %@" : {
+    "SpaceXSI error %lld: %@" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erreur SpaceXAI %1$lld : %2$@"
+            "value" : "Erreur SpaceXSI %1$lld : %2$@"
           }
         }
       }
     },
-    "SpaceXAI is taking too long to answer. Try again." : {
+    "SpaceXSI is taking too long to answer. Try again." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SpaceXAI met trop de temps à répondre. Réessayez."
+            "value" : "SpaceXSI met trop de temps à répondre. Réessayez."
           }
         }
       }
     },
-    "SpaceXAI key received from the Mac. Grok is ready." : {
+    "SpaceXSI key received from the Mac. Grok is ready." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clé SpaceXAI reçue du Mac. Grok est prêt."
+            "value" : "Clé SpaceXSI reçue du Mac. Grok est prêt."
           }
         }
       }
     },
-    "SpaceXAI refused the request. Check your team’s credits on console.x.ai." : {
+    "SpaceXSI refused the request. Check your team’s credits on console.x.ai." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SpaceXAI a refusé la demande. Vérifiez les crédits de votre équipe sur console.x.ai."
+            "value" : "SpaceXSI a refusé la demande. Vérifiez les crédits de votre équipe sur console.x.ai."
           }
         }
       }
     },
-    "SpaceXAI rejects this key. Check it in Settings." : {
+    "SpaceXSI rejects this key. Check it in Settings." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SpaceXAI refuse cette clé. Vérifiez-la dans les Réglages."
+            "value" : "SpaceXSI refuse cette clé. Vérifiez-la dans les Réglages."
           }
         }
       }
     },
-    "SpaceXAI returned an error (%lld)." : {
+    "SpaceXSI returned an error (%lld)." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SpaceXAI a renvoyé une erreur (%lld)."
+            "value" : "SpaceXSI a renvoyé une erreur (%lld)."
           }
         }
       }
@@ -662,12 +662,12 @@
         }
       }
     },
-    "The microphone stops when you stop talking. SpaceXAI turns the audio into text, for about $0.10 per hour of audio." : {
+    "The microphone stops when you stop talking. SpaceXSI turns the audio into text, for about $0.10 per hour of audio." : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le micro s’arrête quand vous ne parlez plus. SpaceXAI transforme l’audio en texte, pour environ 0,10 $ par heure d’audio."
+            "value" : "Le micro s’arrête quand vous ne parlez plus. SpaceXSI transforme l’audio en texte, pour environ 0,10 $ par heure d’audio."
           }
         }
       }
@@ -782,12 +782,12 @@
         }
       }
     },
-    "Unexpected answer from SpaceXAI: %@" : {
+    "Unexpected answer from SpaceXSI: %@" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Réponse inattendue de SpaceXAI : %@"
+            "value" : "Réponse inattendue de SpaceXSI : %@"
           }
         }
       }
@@ -852,12 +852,12 @@
         }
       }
     },
-    "Your SpaceXAI key" : {
+    "Your SpaceXSI key" : {
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Votre clé SpaceXAI"
+            "value" : "Votre clé SpaceXSI"
           }
         }
       }

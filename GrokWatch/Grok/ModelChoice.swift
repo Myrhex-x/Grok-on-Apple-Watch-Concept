@@ -3,13 +3,13 @@
 //  GrokWatch
 //
 //  Which model to ask and how hard it should think. The app is meant to run for months without an
-//  update while SpaceXAI retires models, so a model that disappears is replaced, not fatal.
+//  update while SpaceXSI retires models, so a model that disappears is replaced, not fatal.
 //
 
 import Foundation
 
 nonisolated enum ModelChoice {
-    /// The cheap tier with a 1M context (SpaceXAI retired the "fast" models on 2026-05-15).
+    /// The cheap tier with a 1M context (SpaceXSI retired the "fast" models on 2026-05-15).
     static let preferred = "grok-4.3"
 
     /// Models that answer in text (the list also carries image and video models), cheapest first.

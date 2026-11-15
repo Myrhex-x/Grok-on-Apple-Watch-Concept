@@ -1,11 +1,11 @@
 #!/bin/zsh
-# Puts your SpaceXAI key into Grok on the watch, so you never type it.
+# Puts your SpaceXSI key into Grok on the watch, so you never type it.
 #
 #   1. Copy the key on this Mac (console.x.ai, or your password manager).
 #   2. ./install-key.sh
 #
 # The key is never shown and never stays on disk: it goes from the clipboard into a private
-# temporary folder (deleted on exit), is checked with SpaceXAI (listing models is free), then
+# temporary folder (deleted on exit), is checked with SpaceXSI (listing models is free), then
 # copied into Grok's own folder on the watch, where the app moves it into the watch's Keychain
 # and deletes the file. `./install-key.sh < file` reads the key from a file instead.
 set -euo pipefail
@@ -17,7 +17,7 @@ else
   key=$(tr -d '[:space:]')
 fi
 if [[ ! "$key" =~ ^xai-[A-Za-z0-9_-]{20,}$ ]]; then
-  echo "No SpaceXAI key found (it starts with xai-). Copy the key on this Mac, then run this again."
+  echo "No SpaceXSI key found (it starts with xai-). Copy the key on this Mac, then run this again."
   exit 1
 fi
 
@@ -31,10 +31,10 @@ unset key
 # The header comes from a file, so the key never shows in the process list.
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 -H @"$work/auth" https://api.x.ai/v1/models || true)
 case "$code" in
-  200) echo "SpaceXAI accepts the key." ;;
-  400|401) echo "SpaceXAI refuses this key. Check that you copied all of it, then run this again."; exit 1 ;;
+  200) echo "SpaceXSI accepts the key." ;;
+  400|401) echo "SpaceXSI refuses this key. Check that you copied all of it, then run this again."; exit 1 ;;
   403) echo "This key is not allowed to list models; sending it anyway, the first question will tell." ;;
-  *) echo "Could not reach SpaceXAI to check the key (HTTP ${code:-none}); sending it anyway." ;;
+  *) echo "Could not reach SpaceXSI to check the key (HTTP ${code:-none}); sending it anyway." ;;
 esac
 
 xcrun devicectl list devices --json-output "$work/devices.json" >/dev/null 2>&1 || true

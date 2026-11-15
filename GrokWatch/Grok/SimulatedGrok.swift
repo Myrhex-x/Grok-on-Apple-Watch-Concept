@@ -35,7 +35,7 @@ extension GrokClient {
             answer = "In Paris, 11\u{00A0}°C and cloudy this afternoon. Showers are possible this evening."
             citations = [URL(string: "https://meteofrance.com/previsions-meteo-france/paris/75000")!]
         } else {
-            answer = "Simulated answer to “\(request.input.last?.text ?? "")”. Nothing was sent to SpaceXAI, and **nothing was billed**."
+            answer = "Simulated answer to “\(request.input.last?.text ?? "")”. Nothing was sent to SpaceXSI, and **nothing was billed**."
         }
         return AsyncThrowingStream { continuation in
             let task = Task {

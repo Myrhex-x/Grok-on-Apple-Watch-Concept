@@ -2,7 +2,7 @@
 //  GrokKeyStore.swift
 //  GrokWatch
 //
-//  The user's own SpaceXAI API key, in the watch's Keychain and nowhere else. It never touches
+//  The user's own SpaceXSI API key, in the watch's Keychain and nowhere else. It never touches
 //  UserDefaults, logs, or any server other than api.x.ai, and it is not backed up off the watch.
 //
 //  Every query is scoped by class + service + account. A delete with a broad query can remove
@@ -48,7 +48,7 @@ nonisolated enum GrokKeyStore {
         guard status == errSecItemNotFound else { return false }
         var add = baseQuery
         add[kSecValueData as String] = data
-        add[kSecAttrLabel as String] = "Grok: SpaceXAI API key"
+        add[kSecAttrLabel as String] = "Grok: SpaceXSI API key"
         // Readable once the watch has been unlocked since it was turned on, so an answer that
         // finishes with the wrist down still works; never synced or restored to another device.
         add[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly

@@ -2,7 +2,7 @@
 //  KeyPromptView.swift
 //  GrokWatch
 //
-//  First launch: the app needs the user's SpaceXAI key before anything else.
+//  First launch: the app needs the user's SpaceXSI key before anything else.
 //
 
 import SwiftUI
@@ -11,7 +11,7 @@ struct KeyPromptView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Your SpaceXAI key")
+                Text("Your SpaceXSI key")
                     .font(.headline)
                 Text("Grok answers with your own API key. It stays on the watch and is only used to reach api.x.ai.")
                     .font(.footnote)

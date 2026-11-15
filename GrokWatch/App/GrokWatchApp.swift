@@ -2,7 +2,7 @@
 //  GrokWatchApp.swift
 //  GrokWatch
 //
-//  Grok on the wrist, with the user's own SpaceXAI key: ask by voice or keyboard, read the
+//  Grok on the wrist, with the user's own SpaceXSI key: ask by voice or keyboard, read the
 //  answer. Nothing is spoken aloud.
 //
 

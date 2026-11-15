@@ -3,7 +3,7 @@
 //  GrokWatch
 //
 //  While the question is being said: the microphone with a ring that follows the voice, then the
-//  typing dots while SpaceXAI turns it into text.
+//  typing dots while SpaceXSI turns it into text.
 //
 
 import SwiftUI

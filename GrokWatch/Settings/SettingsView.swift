@@ -51,10 +51,10 @@ struct SettingsView: View {
             } header: {
                 Text("Microphone")
             } footer: {
-                Text("The microphone stops when you stop talking. SpaceXAI turns the audio into text, for about $0.10 per hour of audio.")
+                Text("The microphone stops when you stop talking. SpaceXSI turns the audio into text, for about $0.10 per hour of audio.")
             }
 
-            Section("SpaceXAI account") {
+            Section("SpaceXSI account") {
                 NavigationLink(value: Page.key) {
                     LabeledContent("Key", value: chat.keyHint ?? String(localized: "None"))
                 }

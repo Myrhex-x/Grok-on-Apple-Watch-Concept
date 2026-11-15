@@ -3,7 +3,7 @@
 //  GrokWatch
 //
 //  Pasting the key: when the watch asks for text, the iPhone offers to type it instead, and its
-//  keyboard can paste. The key is checked against SpaceXAI (listing models is free) before it is
+//  keyboard can paste. The key is checked against SpaceXSI (listing models is free) before it is
 //  kept.
 //
 
@@ -31,7 +31,7 @@ struct KeySetupView: View {
                     .onSubmit { Task { await save() } }
                     .disabled(step == .checking)
             } header: {
-                Text("SpaceXAI API key")
+                Text("SpaceXSI API key")
             } footer: {
                 Text("When the text field opens, the iPhone offers to type for the watch: paste the key there. It starts with xai-.")
             }
@@ -85,7 +85,7 @@ struct KeySetupView: View {
             step = .failed(GrokError.invalidKey.localizedDescription)
         } catch {
             // Offline, or a key allowed to answer but not to list models: keep it, the first
-            // question will tell. Only a key SpaceXAI rejects outright is refused.
+            // question will tell. Only a key SpaceXSI rejects outright is refused.
             guard GrokKeyStore.save(key) else {
                 step = .failed(String(localized: "The watch couldn’t save the key."))
                 return

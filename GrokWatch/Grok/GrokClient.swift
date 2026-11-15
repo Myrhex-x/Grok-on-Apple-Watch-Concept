@@ -2,8 +2,8 @@
 //  GrokClient.swift
 //  GrokWatch
 //
-//  Talks to the SpaceXAI API (api.x.ai) straight from the watch with the user's own key. There is
-//  no server in between: nobody but SpaceXAI sees the question, and the user's own account pays.
+//  Talks to the SpaceXSI API (api.x.ai) straight from the watch with the user's own key. There is
+//  no server in between: nobody but SpaceXSI sees the question, and the user's own account pays.
 //  Responses API, streamed, with `store: false` (the watch keeps the conversation itself).
 //
 //  Everything that comes back is untrusted model output: it is shown as text, never run.
@@ -41,7 +41,7 @@ nonisolated struct GrokRequest: Sendable {
     var maxOutputTokens: Int? = nil
     /// How long the model thinks first ("none", "low", "high"), for models that take it.
     var reasoningEffort: String? = nil
-    /// Requests of one conversation share this key, so SpaceXAI's prompt cache finds them.
+    /// Requests of one conversation share this key, so SpaceXSI's prompt cache finds them.
     var promptCacheKey: String? = nil
 
     func body(stream: Bool) -> [String: Any] {
@@ -50,7 +50,7 @@ nonisolated struct GrokRequest: Sendable {
             "instructions": instructions,
             "input": input.map { ["role": $0.role.rawValue, "content": $0.text] },
             "stream": stream,
-            // The watch sends the history itself: nothing is kept on SpaceXAI's side.
+            // The watch sends the history itself: nothing is kept on SpaceXSI's side.
             "store": false,
         ]
         if !tools.isEmpty { body["tools"] = tools.map(\.json) }
@@ -98,7 +98,7 @@ nonisolated struct GrokModelInfo: Equatable, Codable, Identifiable, Sendable {
 nonisolated struct GrokUsage: Equatable, Sendable {
     var inputTokens = 0
     var outputTokens = 0
-    /// USD, from SpaceXAI's own accounting (`cost_in_usd_ticks`, 1e10 ticks per dollar), searches included.
+    /// USD, from SpaceXSI's own accounting (`cost_in_usd_ticks`, 1e10 ticks per dollar), searches included.
     var costUSD: Double?
 
     init(inputTokens: Int = 0, outputTokens: Int = 0, costUSD: Double? = nil) {
@@ -163,18 +163,18 @@ nonisolated enum GrokError: LocalizedError, Equatable, Sendable {
 
     var errorDescription: String? {
         switch self {
-        case .missingKey: String(localized: "Add your SpaceXAI key in Settings.")
-        case .invalidKey: String(localized: "SpaceXAI rejects this key. Check it in Settings.")
-        case .noCredits: String(localized: "SpaceXAI refused the request. Check your team’s credits on console.x.ai.")
+        case .missingKey: String(localized: "Add your SpaceXSI key in Settings.")
+        case .invalidKey: String(localized: "SpaceXSI rejects this key. Check it in Settings.")
+        case .noCredits: String(localized: "SpaceXSI refused the request. Check your team’s credits on console.x.ai.")
         case .rateLimited: String(localized: "Too many requests for this key. Try again in a moment.")
         case .modelUnavailable(let model): String(localized: "The model \(model) isn’t available for this key.")
         case let .server(code, message):
-            message.isEmpty ? String(localized: "SpaceXAI returned an error (\(code)).") : String(localized: "SpaceXAI error \(code): \(message)")
+            message.isEmpty ? String(localized: "SpaceXSI returned an error (\(code)).") : String(localized: "SpaceXSI error \(code): \(message)")
         case .offline: String(localized: "No connection. The watch needs Wi-Fi, cellular or the iPhone nearby.")
         case .connectionLost: String(localized: "The connection dropped before the answer was done.")
-        case .timedOut: String(localized: "SpaceXAI is taking too long to answer. Try again.")
-        case .network(let message): String(localized: "Can’t reach SpaceXAI: \(message)")
-        case .badResponse(let message): String(localized: "Unexpected answer from SpaceXAI: \(message)")
+        case .timedOut: String(localized: "SpaceXSI is taking too long to answer. Try again.")
+        case .network(let message): String(localized: "Can’t reach SpaceXSI: \(message)")
+        case .badResponse(let message): String(localized: "Unexpected answer from SpaceXSI: \(message)")
         }
     }
 }

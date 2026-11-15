@@ -2,9 +2,9 @@
 //  SpeechClient.swift
 //  GrokWatch
 //
-//  Speech to text with the same SpaceXAI key: the recorded question goes to POST /v1/stt and comes
+//  Speech to text with the same SpaceXSI key: the recorded question goes to POST /v1/stt and comes
 //  back as text. watchOS has no speech recognition an app can use, and the system's text input
-//  opens on the keyboard, so this is what makes the microphone one tap. SpaceXAI charges about
+//  opens on the keyboard, so this is what makes the microphone one tap. SpaceXSI charges about
 //  0.10 USD per hour of audio, so a question costs a fraction of a cent.
 //
 
@@ -12,14 +12,14 @@ import Foundation
 
 nonisolated struct SpeechClient: Sendable {
     static let url = URL(string: "https://api.x.ai/v1/stt")!
-    /// Batch transcription price (SpaceXAI, April 2026).
+    /// Batch transcription price (SpaceXSI, April 2026).
     static let usdPerHour = 0.10
     /// Words the transcription should expect to hear.
-    static let keyTerms = ["Grok", "SpaceXAI"]
+    static let keyTerms = ["Grok", "SpaceXSI"]
 
     nonisolated struct Transcript: Equatable, Sendable {
         var text: String
-        /// Seconds of audio, as SpaceXAI measured it.
+        /// Seconds of audio, as SpaceXSI measured it.
         var duration: Double?
     }
 
@@ -35,7 +35,7 @@ nonisolated struct SpeechClient: Sendable {
         return URLSession(configuration: config)
     }()
 
-    /// `language` is "fr", "en"..., or nil to let SpaceXAI detect it.
+    /// `language` is "fr", "en"..., or nil to let SpaceXSI detect it.
     func transcribe(audio: Data, fileName: String, language: String?) async throws -> Transcript {
         #if DEBUG
         if apiKey == GrokClient.simulatedKey {
@@ -61,7 +61,7 @@ nonisolated struct SpeechClient: Sendable {
         return try Self.transcript(from: data)
     }
 
-    /// The options first and the file last: SpaceXAI may ignore fields sent after the file.
+    /// The options first and the file last: SpaceXSI may ignore fields sent after the file.
     static func body(boundary: String, audio: Data, fileName: String, language: String?) -> Data {
         var body = Data()
         func text(_ string: String) { body.append(Data(string.utf8)) }
@@ -70,7 +70,7 @@ nonisolated struct SpeechClient: Sendable {
         }
         if let language {
             field("language", language)
-            // Spoken numbers come back as digits; SpaceXAI needs the language for that.
+            // Spoken numbers come back as digits; SpaceXSI needs the language for that.
             field("format", "true")
         }
         for term in keyTerms { field("keyterm", term) }

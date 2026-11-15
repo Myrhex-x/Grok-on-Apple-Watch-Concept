@@ -42,7 +42,7 @@ final class ChatModel {
     /// Set when the key just arrived from the Mac, until the first question.
     private(set) var keyImportNotice: String?
 
-    /// The microphone: recording the question, then SpaceXAI turning it into text.
+    /// The microphone: recording the question, then SpaceXSI turning it into text.
     enum Voice: Equatable { case off, listening, transcribing }
     private(set) var voice = Voice.off
     /// A line about the last try with the microphone (nothing heard, no access, an error).
@@ -96,7 +96,7 @@ final class ChatModel {
     /// The key came from install-key.sh: say so, then ask for notifications (answers that land
     /// with the wrist down, the reminder before the install ends) and fetch the model list.
     private func keyArrivedFromMac() {
-        keyImportNotice = String(localized: "SpaceXAI key received from the Mac. Grok is ready.")
+        keyImportNotice = String(localized: "SpaceXSI key received from the Mac. Grok is ready.")
         Task {
             await Notifier.requestAuthorizationIfNeeded()
             await InstallExpiry.refreshReminders()
@@ -182,7 +182,7 @@ final class ChatModel {
     // MARK: - Voice
 
     /// One tap: the watch taps the wrist and starts recording; it stops by itself when the speaking
-    /// stops, the words come back from SpaceXAI, and they are asked as the question.
+    /// stops, the words come back from SpaceXSI, and they are asked as the question.
     func listen() {
         guard hasKey, !isBusy, voice == .off else { return }
         voiceNotice = nil
@@ -397,7 +397,7 @@ final class ChatModel {
         }
     }
 
-    /// The chosen model is gone: take the replacement SpaceXAI lists, once.
+    /// The chosen model is gone: take the replacement SpaceXSI lists, once.
     private func switchModel(key: String) async -> Bool {
         guard let list = try? await GrokClient(apiKey: key).listModels(), !list.isEmpty,
               let replacement = ModelChoice.replacement(for: preferences.model, in: list) else { return false }

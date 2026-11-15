@@ -2,7 +2,7 @@
 //  Spending.swift
 //  GrokWatch
 //
-//  What this watch spent this month, from SpaceXAI's own cost per answer.
+//  What this watch spent this month, from SpaceXSI's own cost per answer.
 //
 
 import Foundation

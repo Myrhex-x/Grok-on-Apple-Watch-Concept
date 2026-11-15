@@ -23,7 +23,7 @@ nonisolated enum Reasoning: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
-/// The language the questions are spoken in, for SpaceXAI's transcription.
+/// The language the questions are spoken in, for SpaceXSI's transcription.
 nonisolated enum SpeechLanguage: String, CaseIterable, Identifiable, Sendable {
     case english = "en"
     case french = "fr"
@@ -39,10 +39,10 @@ nonisolated enum SpeechLanguage: String, CaseIterable, Identifiable, Sendable {
         }
     }
 
-    /// What the transcription takes (nil: SpaceXAI detects the language).
+    /// What the transcription takes (nil: SpaceXSI detects the language).
     var code: String? { self == .automatic ? nil : rawValue }
 
-    /// The watch's own language when it is one of these, else SpaceXAI detects it.
+    /// The watch's own language when it is one of these, else SpaceXSI detects it.
     static var deviceDefault: SpeechLanguage {
         let code = Locale.preferredLanguages.first.flatMap { Locale(identifier: $0).language.languageCode?.identifier }
         return code.flatMap(SpeechLanguage.init(rawValue:)) ?? .automatic
@@ -84,7 +84,7 @@ final class Preferences {
     var speechLanguage: SpeechLanguage {
         didSet { defaults.set(speechLanguage.rawValue, forKey: Keys.speechLanguage) }
     }
-    /// The models the key can use, as SpaceXAI listed them last.
+    /// The models the key can use, as SpaceXSI listed them last.
     var models: [GrokModelInfo] {
         didSet { defaults.set(try? JSONEncoder().encode(models), forKey: Keys.models) }
     }
